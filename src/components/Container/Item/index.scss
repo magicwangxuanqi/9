@@ -1,0 +1,33 @@
+.Item {
+    margin-right: 30px;
+    width: 265px;
+    .image {
+        img {
+            width: 100%;
+        }
+    }
+
+    .name {
+        p {
+            margin: 0;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    }
+
+    .info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #616669;
+
+        .price {
+            font-size: 16px;
+            text-align: right;
+            color: #fa5741;
+        }
+    }
+}

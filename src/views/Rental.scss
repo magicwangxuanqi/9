@@ -1,0 +1,31 @@
+.rent {
+    section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .title {
+        text-align: center;
+        font-size: 30px;
+        font-weight: bold;
+    }
+    aside {
+        width: 700px;
+        padding: 20px 0;
+        .label {
+            display: inline-block;
+            width: 120px;
+            text-align: center;
+            font-weight: bold;
+        }
+    
+        .link_price {
+            margin-left: 50px;
+            font-size: 12px;
+        }
+    }
+    .submit {
+        display: flex;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,19 @@
+.nav-bar {
+    background-color: #394043;
+    ul {
+        display: flex;
+        margin: 0 auto 20px;
+        width: 1150px;
+        li {
+            margin-right: 20px;
+            height: 40px;
+            line-height: 40px;
+            a {
+                color: #a9abab;
+                &:hover {
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

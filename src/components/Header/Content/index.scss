@@ -1,0 +1,20 @@
+// content
+.Content {
+    margin: 116px 135px 0;
+    font-weight: bold;
+
+    .choice {
+        margin-bottom: 36px;
+        display: flex;
+        font-size: 18px;
+        li {
+            margin: 0 15px;
+        }
+    }
+    .sound {
+        margin-top: 255px;
+        span {
+            margin-left: 5px;
+        }
+    }
+}

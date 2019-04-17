@@ -4,7 +4,7 @@ import { login_model, register_model, logout } from "@/redux/action";
 
 import "./index.scss";
 import { Row, Col, Icon, Button } from "antd";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 @connect(
   state => state.UserReducer,
@@ -32,7 +32,7 @@ class Nav extends Component {
           path: "/rental"
         },
         {
-          text: "经纪人登陆",
+          text: "中介登陆",
           path: "/admin"
         }
       ]

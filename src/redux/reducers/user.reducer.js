@@ -6,13 +6,13 @@ import {
   LOGIN,
   LOGOUT
 } from "../creator_name";
-const initaState = {
+const initState = {
   // 注册模态框显示状态
   registerStatus: false,
   // 登陆模态框显示状态
   loginStatus: false,
   // 是否登陆
-  isAuth: window.localStorage.getItem('token') ? true : false,
+  isAuth: window.localStorage.getItem("token") ? true : false,
   //报错信息
   msg: "",
   // 用户信息
@@ -21,7 +21,7 @@ const initaState = {
   }
 };
 
-export default (state = initaState, action) => {
+export default (state = initState, action) => {
   switch (action.type) {
     // 登陆模态弹窗
     case LOGINMODEL:
@@ -29,7 +29,6 @@ export default (state = initaState, action) => {
         ...state,
         loginStatus: action.loginFlag
       };
-      break;
     // 注册模态弹窗
     case REGISTERMODEL:
       return {
@@ -53,16 +52,16 @@ export default (state = initaState, action) => {
     case LOGIN:
       return {
         ...state,
-        isAuth: window.localStorage.getItem('token') ? true : false,
+        isAuth: window.localStorage.getItem("token") ? true : false,
         msg: "",
         userInfo: { ...action.data }
       };
     case LOGOUT:
       return {
         ...state,
-        isAuth: window.localStorage.getItem('token') ? true : false,
-        msg: ''
-      }
+        isAuth: window.localStorage.getItem("token") ? true : false,
+        msg: ""
+      };
     default:
       return state;
   }

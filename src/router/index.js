@@ -5,7 +5,10 @@ import Rental from "@/views/Rental";
 import Secondary from "@/views/Secondary";
 import BridalChamber from "@/views/BridalChamber";
 import Rent from "@/views/Rent";
-// import Loadable from 'react-loadable';按需加载
+import Detail from "@/views/Detail";
+import Admin from "@/views/Admin";
+// 按需加载
+// import Loadable from 'react-loadable';
 
 let router = [
   {
@@ -36,6 +39,14 @@ let router = [
   {
     path: '/rent/',
     component: Rent
+  },
+  {
+    path: '/detail/',
+    component: Detail
+  },
+  {
+    path: '/admin/',
+    component: Admin
   }
 ];
 export default router;

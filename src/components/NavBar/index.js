@@ -8,7 +8,7 @@ const NavBar = () => {
     { title: "新房", path: "/bridalChamber" },
     { title: "租房", path: "/rent" },
     { title: "发布房源", path: "/rental" },
-    { title: "经纪人登陆", path: "/admin" }
+    { title: "中介登陆", path: "/admin" }
   ];
   return (
     <div className="nav-bar">

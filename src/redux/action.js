@@ -33,7 +33,7 @@ export const register = ({ username, password, repeatPassword }) => {
   return dispatch => {
     axios.post("/user/register", { username, password }).then(res => {
       // 成功
-      if (res.staus == 200 && res.data.code == 0) {
+      if (res.staus === 200 && res.data.code === 0) {
         dispatch({ type: REGISTER, data: { username } });
       } else {
         // 失败报错
@@ -51,7 +51,7 @@ export const login = ({ username, password }) => {
     axios.post("/user/login", { username, password }).then(res => {
       console.log(res.data);
       // 成功
-      if (res.status == 200 && res.data.code == 0) {
+      if (res.status === 200 && res.data.code === 0) {
         const { username } = res.data.userInfo;
         dispatch({ type: LOGIN, data: { username } });
         window.localStorage.setItem('username', username)

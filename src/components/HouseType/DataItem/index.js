@@ -10,7 +10,7 @@ class DataItem extends React.Component {
         <Row>
           <Col span={6}>
             <aside className="left">
-              <Link to="/detail">
+              <Link to="/rent_detail">
                 <img
                   src="http://house.boolshop.com/upload/20180226/4b43fb2f20f80dfbc73a827d55197c17.jpg"
                   alt=""
@@ -21,11 +21,11 @@ class DataItem extends React.Component {
           <Col span={12}>
             <aside className="middle">
               <div className="title">
-                <Link to="/detail">诚心出售 看房方便 方正格局 两梯四户</Link>
+                <Link to="/rent_detail">诚心出售 看房方便 方正格局 两梯四户</Link>
               </div>
               <div className="introduce">
                 <Icon type="home" />
-                &nbsp; <Link to="/detail">万象新天一区</Link> | 1室1厅 |68.22平米 | 北 | 精装 | 无电梯
+                &nbsp; <Link to="/rent_detail">万象新天一区</Link> | 1室1厅 |68.22平米 | 北 | 精装 | 无电梯
               </div>
               <div className="floor">
                 <Icon type="environment" />

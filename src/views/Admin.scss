@@ -1,0 +1,9 @@
+.admin {
+    &-register, &-login {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 722px;
+        background: url(../assets//admin.jpg) center center no-repeat;
+    }
+}

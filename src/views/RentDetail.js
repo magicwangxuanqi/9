@@ -1,6 +1,8 @@
 import React from "react";
-import { Tag, Card, Button } from "antd";
+import { Tag, Card, Button, Row, Col } from "antd";
+
 import Search from "@/components/Search/index";
+import MySlider from "@/components/MySlider/index";
 import "./RentDetail.scss";
 
 class RentDetail extends React.Component {
@@ -27,7 +29,61 @@ class RentDetail extends React.Component {
               </Button>
             }
           >
-            <p>123</p>
+            <div className="card-box">
+              <section className="card-box-left">
+                <MySlider />
+              </section>
+              <section className="card-box-right">
+                <aside className="info">
+                  <Row span={24}>
+                    <h1>
+                      3000&nbsp;<span className="unit">元/月</span>
+                    </h1>
+                  </Row>
+                  <Row style={{ margin: "20px 0" }}>
+                    <Col span={12}>
+                      <p>面积：65平米</p>
+                    </Col>
+                    <Col span={12}>
+                      <p>房屋户型：2室1厅1卫</p>
+                    </Col>
+                  </Row>
+                  <Row style={{ margin: "20px 0" }}>
+                    <Col span={12}>
+                      <p>楼层：底层(共1层)</p>
+                    </Col>
+                    <Col span={12}>
+                      <p>房屋朝向：东</p>
+                    </Col>
+                  </Row>
+                  <Row style={{ margin: "20px 0" }}>
+                    <Col span={24}>
+                      <p>小区：象山小区(二区)</p>
+                    </Col>
+                  </Row>
+                  <Row style={{ margin: "20px 0" }}>
+                    <Col span={24}>
+                      <p>时间：14个月之前发布</p>
+                    </Col>
+                  </Row>
+                </aside>
+                <aside className="contact">
+                  <Row>
+                    <Col span={8} />
+                    <Col span={16}>
+                      <div className="self_info">
+                        <span className="name">张三</span>
+                        <span className="identity">平台人员</span>
+                      </div>
+                      <p className="phone">
+                        联系电话：
+                        <span style={{ fontWeight: "bold" }}>15659266753</span>
+                      </p>
+                    </Col>
+                  </Row>
+                </aside>
+              </section>
+            </div>
           </Card>
         </section>
       </div>

@@ -11,7 +11,7 @@ class Header extends Component {
       <div className="Header">
         <ModelCard />
         <Nav />
-        <Content />
+        <Content history={this.props.history} />
       </div>
     );
   }

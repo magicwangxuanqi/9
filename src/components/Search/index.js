@@ -1,13 +1,14 @@
 import React from "react";
 import { Select, Input } from "antd";
-import NavBar from "@/components/NavBar";
 
 import "./index.scss";
 
 class Search extends React.Component {
-  state = {
+  constructor(props) {
+    super();
+    const TYPE = props.history.location.pathname.slice(1);
     // 价格
-    price: [
+    let price = [
       "100万以下",
       "100-200万",
       "200-400万",
@@ -15,17 +16,35 @@ class Search extends React.Component {
       "600-800万",
       "800-1000万",
       "1000万以上"
-    ],
+    ];
     // 装修
-    decorate: ["精装修", "普通装修", "毛坯房"],
+    let decorate = ["精装修", "普通装修", "毛坯房"];
     // 面积
-    area: ["50以下", "50-100", "100-150", "150-200", "200以上"]
-  };
+    let area = ["50以下", "50-100", "100-150", "150-200", "200以上"];
+    if (TYPE === "rent") {
+      price = [
+        "1500元以下",
+        "1500-2000元",
+        "2000-2500元",
+        "2500-3000元",
+        "3000-3500元",
+        "3500-4000元",
+        "4000元以上"
+      ];
+      area = ["20以下", "20-40", "40-60", "60-100", "100以上"];
+    }
+    this.state = {
+      price,
+      decorate,
+      area,
+      searchMsg: props.searchVal ? decodeURI(props.searchVal) : ""
+    };
+  }
   render() {
-    const { price, decorate, area } = this.state;
+    const { price, decorate, area, searchMsg } = this.state;
+    const { history, path } = this.props;
     return (
       <div className="search">
-        <NavBar />
         <section className="search">
           <aside>
             <Select defaultValue="按价格">
@@ -65,7 +84,11 @@ class Search extends React.Component {
           <Input.Search
             placeholder="请输入查询条件找房"
             size="large"
-            onSearch={value => console.log(value)}
+            value={searchMsg}
+            onChange={e => this.setState({ searchMsg: e.target.value })}
+            onSearch={value => {
+              history.push(`${path}?search=${value}`);
+            }}
             enterButton
           />
         </div>

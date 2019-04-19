@@ -6,24 +6,37 @@ class Content extends Component {
   constructor() {
     super();
     this.state = {
-      placeholderText: "请输入区域、商圈或小区名开始找房"
+      placeholderText: "请输入区域、商圈或小区名开始找房",
+      optionVal: "used",
+      searchMsg: ""
     };
   }
   handleChange(val) {
     console.log(val);
     switch (val) {
       case "news":
-        this.setState({ placeholderText: "请输入楼盘名称开始找房" });
+        this.setState({
+          placeholderText: "请输入楼盘名称开始找房",
+          optionVal: "news"
+        });
         break;
       case "rent":
-        this.setState({ placeholderText: "请输入区域、商圈或小区名开始找房" });
+        this.setState({
+          placeholderText: "请输入区域、商圈或小区名开始找房",
+          optionVal: "rent"
+        });
         break;
       default:
-        this.setState({ placeholderText: "请输入区域、商圈或小区名开始找房" });
+        this.setState({
+          placeholderText: "请输入区域、商圈或小区名开始找房",
+          optionVal: "used"
+        });
         break;
     }
   }
   render() {
+    const { placeholderText, optionVal, searchMsg } = this.state;
+    const { history } = this.props;
     return (
       <div className="Content">
         {/* home-container */}
@@ -43,15 +56,36 @@ class Content extends Component {
           </Select>
           <Input
             allowClear
-            placeholder={this.state.placeholderText}
+            placeholder={placeholderText}
             style={{ width: "30%" }}
             size="large"
+            ref="input"
+            value={searchMsg}
+            onChange={e => {
+              this.setState({
+                searchMsg: e.target.value
+              });
+            }}
           />
           <Button
             type="primary"
             icon="search"
             size="large"
             style={{ width: "50px" }}
+            onClick={() => {
+              console.log(searchMsg);
+              switch (optionVal) {
+                case "used":
+                  history.push(`/secondary?search=${searchMsg}`);
+                  break;
+                case "news":
+                  history.push(`/bridalChamber?search=${searchMsg}`);
+                  break;
+                default:
+                  history.push(`/rent?search=${searchMsg}`);
+                  break;
+              }
+            }}
           />
         </Input.Group>
         <br />

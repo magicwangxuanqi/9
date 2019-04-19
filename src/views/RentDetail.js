@@ -1,7 +1,7 @@
 import React from "react";
 import { Tag, Card, Button, Row, Col } from "antd";
 
-import Search from "@/components/Search/index";
+import NavBar from "@/components/NavBar";
 import MySlider from "@/components/MySlider/index";
 import "./RentDetail.scss";
 
@@ -9,7 +9,7 @@ class RentDetail extends React.Component {
   render() {
     return (
       <div className="rent_detail">
-        <Search />
+        <NavBar />
         <section className="rent_detail-content">
           <Tag color="green" style={{ margin: "30px 0" }}>
             当前房源
@@ -84,6 +84,102 @@ class RentDetail extends React.Component {
                 </aside>
               </section>
             </div>
+          </Card>
+          <br />
+          <Card title={<h3>房源介绍</h3>}>
+            <div>
+              <section>
+                <h4
+                  style={{
+                    paddingBottom: "10px",
+                    fontWeight: "bold",
+                    borderBottom: "2px solid #333"
+                  }}
+                >
+                  基本属性
+                </h4>
+                <Row style={{ padding: "20px 0" }}>
+                  <Col span={8}>
+                    <span style={{ fontSize: "11px", color: "#999" }}>
+                      租赁方式：
+                    </span>
+                    &nbsp; 暂无数据
+                  </Col>
+                  <Col span={8}>
+                    <span style={{ fontSize: "11px", color: "#999" }}>
+                      装修情况：
+                    </span>
+                    &nbsp; 精装
+                  </Col>
+                  <Col span={8}>
+                    <span style={{ fontSize: "11px", color: "#999" }}>
+                      供暖方式：
+                    </span>
+                    &nbsp; 暂无数据
+                  </Col>
+                </Row>
+              </section>
+              <section>
+                <h4
+                  style={{
+                    paddingBottom: "10px",
+                    fontWeight: "bold",
+                    borderBottom: "2px solid #333"
+                  }}
+                >
+                  房源特色
+                </h4>
+                <aside style={{ marginTop: "30px" }}>
+                  <i className="iconfont icon-yushi" />
+                  <i className="iconfont icon-weishengjian" />
+                  <i className="iconfont icon-bingxiang" />
+                  <i className="iconfont icon-shugui" />
+                  <i className="iconfont icon-dianshiji" />
+                  <i className="iconfont icon-chufang" />
+                  <i className="iconfont icon-kongtiao-" />
+                </aside>
+              </section>
+            </div>
+          </Card>
+          <br />
+          <Card title="好房为您推荐">
+            <Row>
+              {[1, 2, 3, 4].map((item, index) => {
+                return (
+                  <Col span={6} key={index} style={{ padding: "0 10px" }}>
+                    <img
+                      src="http://house.boolshop.com/upload/20180222/cb2e0ec020d02e444415bad5a154b036.jpg"
+                      style={{
+                        marginBottom: "10px",
+                        width: "250px",
+                        height: "auto"
+                      }}
+                    />
+                    <Row>
+                      <Col
+                        span={12}
+                        style={{
+                          paddingLeft: "5px"
+                        }}
+                      >
+                        象山公寓（二区）
+                      </Col>
+                      <Col
+                        span={12}
+                        style={{
+                          paddingRight: "5px",
+                          fontSize: "12px",
+                          color: "#999",
+                          textAlign: "right"
+                        }}
+                      >
+                        1室0厅/20平米
+                      </Col>
+                    </Row>
+                  </Col>
+                );
+              })}
+            </Row>
           </Card>
         </section>
       </div>

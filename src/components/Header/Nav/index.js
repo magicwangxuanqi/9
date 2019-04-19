@@ -17,15 +17,15 @@ class Nav extends Component {
       linkTag: [
         {
           text: "二手房",
-          path: "/secondary"
+          path: "/secondary?search="
         },
         {
           text: "新房",
-          path: "/bridalChamber"
+          path: "/bridalChamber?search="
         },
         {
           text: "租房",
-          path: "/rent"
+          path: "/rent?search="
         },
         {
           text: "发布房源",
@@ -48,12 +48,6 @@ class Nav extends Component {
               <Icon type="home" />
               <span>找房</span>
             </div>
-            <Link to="/city">
-              <Button type="primary" size="small">
-                <Icon type="environment" />
-                哈尔滨
-              </Button>
-            </Link>
           </Col>
           <Col span={8} className="Nav-middle">
             {/* 面包屑 */}

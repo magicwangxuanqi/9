@@ -4,7 +4,8 @@ import {
   ERRORMSG,
   REGISTER,
   LOGIN,
-  LOGOUT
+  LOGOUT,
+  ENTRUST
 } from "./creator_name";
 import axios from "axios";
 // 登陆模态窗
@@ -54,7 +55,7 @@ export const login = ({ username, password }) => {
       if (res.status === 200 && res.data.code === 0) {
         const { username } = res.data.userInfo;
         dispatch({ type: LOGIN, data: { username } });
-        window.localStorage.setItem('username', username)
+        window.localStorage.setItem("username", username);
         // 关闭登陆模态窗
         dispatch(login_model(false));
       } else {
@@ -65,6 +66,11 @@ export const login = ({ username, password }) => {
   };
 };
 // 退出
-export const logout = () => ({ 
+export const logout = () => ({
   type: LOGOUT
-})
+});
+// 提交委托
+export const entrust = formData => ({
+  type: ENTRUST,
+  formData
+});

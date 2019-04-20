@@ -6,7 +6,5 @@ export const REGISTER = "REGISTER";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 
-// housing creator
-export const SECONDARY = 'SECONDARY';
-export const BRIDALCHAMBER = 'BRIDALCHAMBER';
-export const RENT = 'RENT';
+// submit entrust
+export const ENTRUST = 'ENTRUST';

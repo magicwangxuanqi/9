@@ -288,8 +288,8 @@ class Rent extends Component {
                 });
               }}
             >
-              <Select.Option value="是">是</Select.Option>
-              <Select.Option value="否">否</Select.Option>
+              <Select.Option value={true}>是</Select.Option>
+              <Select.Option value={false}>否</Select.Option>
             </Select>
           </aside>
         </section>
@@ -389,16 +389,11 @@ class Rent extends Component {
           <Popconfirm
             title="是否确认提交所有数据？"
             onConfirm={() => {
-              // 确认后的反馈，同时提交数据到action
-              this.props.entrust(this.state);
-              message.success("发布房源成功");
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000);
+              this.judge();
             }}
             onCancel={() => {
               // 取消后的反馈
-              message.error("已取消发布房源");
+              message.error("已取消发布房源信息");
             }}
             okText="Yes"
             cancelText="No"
@@ -409,6 +404,37 @@ class Rent extends Component {
       </div>
     );
   }
+  // 各种判断
+  judge = () => {
+    if (this.state.houseTitle === "") {
+      message.warning("标题不能为空， 请输入标题");
+    } else if (this.state.region.name === "") {
+      message.warning("小区名称不能为空，请输入小区名称");
+    } else if (this.state.region.area === "") {
+      message.warning("面积不能为空，请输入面积");
+    } else if (this.state.floor.current === "") {
+      message.warning("当前所在楼层数为空，请输入当前所在楼层数");
+    } else if (this.state.floor.all === "") {
+      message.warning("总楼层数为空，请输入总楼层数");
+    } else if (this.state.price === "") {
+      message.warning("价格不能为空，请输入价格");
+    } else if (this.state.appellation === "") {
+      message.warning("称呼不能为空，请输入称呼");
+    } else if (this.state.phone === "") {
+      message.warning("手机号码不能为空，请输入手机号码");
+    } else {
+      try {
+        // 确认后的反馈，同时提交数据到action
+        this.props.entrust(this.state);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } catch (error) {
+        message.error("发布房源信息失败");
+      }
+      message.success("发布房源信息成功");
+    }
+  };
 }
 
 export default Rent;

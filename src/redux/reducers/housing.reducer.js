@@ -1,7 +1,5 @@
 import moment from "moment";
-import {
-  ENTRUST
-} from "../creator_name";
+import { ENTRUST } from "../creator_name";
 
 const initState = {
   houseType: "二手房",
@@ -39,8 +37,8 @@ const initState = {
 
 export default (state = initState, action) => {
   switch (action.type) {
+    // 委托房源信息
     case ENTRUST:
-      console.log(action.formData)
       return {
         ...state,
         ...action.formData,
@@ -50,7 +48,7 @@ export default (state = initState, action) => {
           pattern: {
             ...state.region.pattern,
             ...action.formData.region.pattern
-          },
+          }
         },
         floor: {
           ...state.floor,

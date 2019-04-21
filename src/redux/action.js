@@ -5,9 +5,12 @@ import {
   REGISTER,
   LOGIN,
   LOGOUT,
-  ENTRUST
+  ENTRUST,
+  GETHOUSINGINFO,
+  SERIAL
 } from "./creator_name";
 import axios from "axios";
+/** 用户相关action  */
 // 登陆模态窗
 export const login_model = loginFlag => ({
   type: LOGINMODEL,
@@ -69,8 +72,61 @@ export const login = ({ username, password }) => {
 export const logout = () => ({
   type: LOGOUT
 });
+
 // 提交委托
-export const entrust = formData => ({
-  type: ENTRUST,
-  formData
-});
+export const entrust = formData => {
+  return dispatch => {
+    axios
+      .post("/housing/rental", { ...formData })
+      .then(res => {
+        // 成功
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({ type: ENTRUST, formData });
+        }
+      })
+      .catch(err => {
+        // 失败
+        throw err;
+      });
+  };
+};
+
+// 获取房源信息
+export const getHousingInfo = () => {
+  return dispatch => {
+    axios
+      .get("/housing/message")
+      .then(res => {
+        // 成功
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({ type: GETHOUSINGINFO, data: res.data });
+        }
+      })
+      .catch(err => {
+        // 失败
+        throw err;
+      });
+  };
+};
+
+// 根据id获取房源信息
+export const serial = id => { 
+  return dispatch => {
+    axios
+      .get("/housing/serial", {
+        params: {
+          id
+        }
+      })
+      .then(res => {
+        // 成功
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({ type: SERIAL, data: res.data });
+        }
+      })
+      .catch(err => {
+        // 失败
+        throw err;
+      });
+  };
+}

@@ -56,6 +56,7 @@ export default (state = initState, action) => {
         msg: "",
         userInfo: { ...action.data }
       };
+    // 推出登陆
     case LOGOUT:
       return {
         ...state,

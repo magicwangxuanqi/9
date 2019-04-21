@@ -10,7 +10,7 @@ class DataItem extends React.Component {
         <Row>
           <Col span={6}>
             <aside className="left">
-              <Link to="/rent_detail">
+              <Link to={`/rent_detail/${this.props.data._id}`}>
                 <img
                   src="http://house.boolshop.com/upload/20180226/4b43fb2f20f80dfbc73a827d55197c17.jpg"
                   alt=""
@@ -21,19 +21,33 @@ class DataItem extends React.Component {
           <Col span={12}>
             <aside className="middle">
               <div className="title">
-                <Link to="/rent_detail">诚心出售 看房方便 方正格局 两梯四户</Link>
+                <Link to={`/rent_detail/${this.props.data._id}`}>
+                  {this.props.data.houseTitle}
+                </Link>
               </div>
               <div className="introduce">
                 <Icon type="home" />
-                &nbsp; <Link to="/rent_detail">万象新天一区</Link> | 1室1厅 |68.22平米 | 北 | 精装 | 无电梯
+                &nbsp;{" "}
+                <Link to={`/rent_detail/${this.props.data._id}`}>
+                  {this.props.data.region.name}
+                </Link>{" "}
+                | {this.props.data.region.pattern.room}室
+                {/* {this.props.data.region.pattern.hail}厅 */}
+                {this.props.data.region.pattern.toilet}卫 |
+                {this.props.data.region.area}平米 |{" "}
+                {this.props.data.region.direction} |{" "}
+                {this.props.data.region.fitment} |{" "}
+                {this.props.data.region.elevator ? "有" : "无"}电梯
               </div>
               <div className="floor">
                 <Icon type="environment" />
-                &nbsp; 低楼层(共12层)
+                &nbsp; 第{this.props.data.floor.current}层(共
+                {this.props.data.floor.all}层)
               </div>
               <div className="heat">
                 <Icon type="star" />
-                &nbsp; 23人关注 / 14个月以前发布
+                &nbsp; {this.props.data.attention_number}人关注 / 发布时间：
+                {this.props.data.time}
               </div>
               <div>
                 <Tag color="#FF8062">有租房需要预约</Tag>
@@ -43,9 +57,10 @@ class DataItem extends React.Component {
           <Col span={6}>
             <aside className="right">
               <div className="price">
-                <span className="price-num">390</span>&nbsp;万
+                <span className="price-num">{this.props.data.price}</span>
+                &nbsp;万
               </div>
-              <div className="unit-price">单价57168元/平米</div>
+              <div className="unit-price">{this.props.data.time}</div>
             </aside>
           </Col>
         </Row>

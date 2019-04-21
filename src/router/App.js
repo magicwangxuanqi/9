@@ -10,10 +10,6 @@ const Home = Loadable({
   loader: () => import("@/views/Home"),
   loading: Loading
 });
-const City = Loadable({
-  loader: () => import("@/views/City"),
-  loading: Loading
-});
 const UserCenter = Loadable({
   loader: () => import("@/views/UserCenter"),
   loading: Loading
@@ -54,15 +50,14 @@ class App extends Component {
         <div className="router-switch">
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/city/" component={City} />
             <Route path="/userCenter/" component={UserCenter} />
             <Route path="/rental/" component={Rental} />
             <Route path="/secondary/" component={Secondary} />
             <Route path="/bridalChamber/" component={BridalChamber} />
             <Route path="/rent/" component={Rent} />
-            <Route path="/rent_detail/" component={RentDetail} />
+            <Route path="/rent_detail/:id" component={RentDetail} />
             <Route path="/admin/" component={Admin} />
-            <Route component={Err} />
+            {/* <Route component={Err} /> */}
           </Switch>
         </div>
       </Router>

@@ -1,11 +1,22 @@
 import React from "react";
+import { connect } from "react-redux";
+import { serial } from "@/redux/action";
 import { Tag, Card, Button, Row, Col } from "antd";
 
 import NavBar from "@/components/NavBar";
 import MySlider from "@/components/MySlider/index";
 import "./RentDetail.scss";
 
+@connect(
+  state => state.SerialReducer,
+  { serial }
+)
 class RentDetail extends React.Component {
+  componentDidMount() {
+    const { match } = this.props;
+    this.props.serial(match.params.id);
+    console.log(this.props.result);
+  }
   render() {
     return (
       <div className="rent_detail">
@@ -18,7 +29,7 @@ class RentDetail extends React.Component {
             title={
               <div>
                 <h2 style={{ fontWeight: "bold" }}>
-                  丽景天成二期，两室1厅，朝北
+                  {this.props.result.houseTitle}
                 </h2>
                 <p style={{ fontSize: "14px", color: "#AAA" }}>房东人很好</p>
               </div>
@@ -37,33 +48,41 @@ class RentDetail extends React.Component {
                 <aside className="info">
                   <Row span={24}>
                     <h1>
-                      3000&nbsp;<span className="unit">元/月</span>
+                      {this.props.result.price}&nbsp;
+                      <span className="unit">元/月</span>
                     </h1>
                   </Row>
                   <Row style={{ margin: "20px 0" }}>
                     <Col span={12}>
-                      <p>面积：65平米</p>
+                      <p>面积：{this.props.result.region.area}平米</p>
                     </Col>
                     <Col span={12}>
-                      <p>房屋户型：2室1厅1卫</p>
+                      <p>
+                        房屋户型：{this.props.result.region.pattern.room}室
+                        {this.props.result.region.pattern.hail}厅
+                        {this.props.result.region.pattern.toilet}卫
+                      </p>
                     </Col>
                   </Row>
                   <Row style={{ margin: "20px 0" }}>
                     <Col span={12}>
-                      <p>楼层：底层(共1层)</p>
+                      <p>
+                        楼层：第{this.props.result.floor.current}层(共
+                        {this.props.result.floor.all}层)
+                      </p>
                     </Col>
                     <Col span={12}>
-                      <p>房屋朝向：东</p>
+                      <p>房屋朝向：{this.props.result.region.direction}</p>
                     </Col>
                   </Row>
                   <Row style={{ margin: "20px 0" }}>
                     <Col span={24}>
-                      <p>小区：象山小区(二区)</p>
+                      <p>小区：{this.props.result.region.name}</p>
                     </Col>
                   </Row>
                   <Row style={{ margin: "20px 0" }}>
                     <Col span={24}>
-                      <p>时间：14个月之前发布</p>
+                      <p>时间：{this.props.result.time}</p>
                     </Col>
                   </Row>
                 </aside>
@@ -149,6 +168,7 @@ class RentDetail extends React.Component {
                   <Col span={6} key={index} style={{ padding: "0 10px" }}>
                     <img
                       src="http://house.boolshop.com/upload/20180222/cb2e0ec020d02e444415bad5a154b036.jpg"
+                      alt=""
                       style={{
                         marginBottom: "10px",
                         width: "250px",

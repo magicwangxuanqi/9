@@ -1,12 +1,11 @@
 import React from "react";
-// import { } from 'antd';
 import Swiper from "swiper";
 import "swiper/dist/css/swiper.min.css";
 import "./index.scss";
 
 class MySlider extends React.Component {
   componentDidMount() {
-    const galleryTop = new Swiper(".gallery-top", {
+    new Swiper(".gallery-top", {
       loop: true,
       loopedSlides: 3, //looped slides should be the same
       navigation: {

@@ -12,7 +12,11 @@ class DataItem extends React.Component {
             <aside className="left">
               <Link to={`/rent_detail/${this.props.data._id}`}>
                 <img
-                  src="http://house.boolshop.com/upload/20180226/4b43fb2f20f80dfbc73a827d55197c17.jpg"
+                  src={
+                    this.props.data.images[0]
+                      ? this.props.data.images[0].thumbUrl
+                      : null
+                  }
                   alt=""
                 />
               </Link>
@@ -58,7 +62,7 @@ class DataItem extends React.Component {
             <aside className="right">
               <div className="price">
                 <span className="price-num">{this.props.data.price}</span>
-                &nbsp;万
+                &nbsp;元
               </div>
               <div className="unit-price">{this.props.data.time}</div>
             </aside>

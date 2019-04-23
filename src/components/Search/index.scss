@@ -3,7 +3,7 @@
     padding-bottom: 30px;
 
     .search {
-        margin: 0 auto 30px;
+        margin: 0 auto;
         padding-top: 30px;
         display: flex;
         justify-content: center;
@@ -12,10 +12,5 @@
         aside {
             margin-right: 30px;
         }
-    }
-
-    .searchInput {
-        width: 50%;
-        margin: 0 auto;
     }
 }

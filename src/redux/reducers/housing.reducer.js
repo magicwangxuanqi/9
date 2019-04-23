@@ -4,6 +4,7 @@ import { ENTRUST } from "../creator_name";
 const initState = {
   houseType: "二手房",
   houseTitle: "",
+  images: [],
   region: {
     name: "",
     pattern: {
@@ -39,9 +40,11 @@ export default (state = initState, action) => {
   switch (action.type) {
     // 委托房源信息
     case ENTRUST:
+      console.log(action.formData);
       return {
         ...state,
         ...action.formData,
+        // images: [],
         region: {
           ...state.region,
           ...action.formData.region,

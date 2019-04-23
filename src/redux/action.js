@@ -7,9 +7,23 @@ import {
   LOGOUT,
   ENTRUST,
   GETHOUSINGINFO,
-  SERIAL
+  SERIAL,
+  LIKE,
+  RECOMMEND
 } from "./creator_name";
+
 import axios from "axios";
+// 导入api
+import {
+  api_register,
+  api_login,
+  api_rental,
+  api_message,
+  api_serial,
+  api_like,
+  api_recommend
+} from "../utils/api";
+
 /** 用户相关action  */
 // 登陆模态窗
 export const login_model = loginFlag => ({
@@ -35,7 +49,7 @@ export const register = ({ username, password, repeatPassword }) => {
     return errorMsg("两次输入的密码不一致");
   }
   return dispatch => {
-    axios.post("/user/register", { username, password }).then(res => {
+    axios.post(api_register, { username, password }).then(res => {
       // 成功
       if (res.staus === 200 && res.data.code === 0) {
         dispatch({ type: REGISTER, data: { username } });
@@ -52,7 +66,7 @@ export const login = ({ username, password }) => {
     return errorMsg("用户名密码必须输入");
   }
   return dispatch => {
-    axios.post("/user/login", { username, password }).then(res => {
+    axios.post(api_login, { username, password }).then(res => {
       console.log(res.data);
       // 成功
       if (res.status === 200 && res.data.code === 0) {
@@ -77,7 +91,7 @@ export const logout = () => ({
 export const entrust = formData => {
   return dispatch => {
     axios
-      .post("/housing/rental", { ...formData })
+      .post(api_rental, { ...formData })
       .then(res => {
         // 成功
         if (res.status === 200 && res.data.code === 0) {
@@ -92,10 +106,10 @@ export const entrust = formData => {
 };
 
 // 获取房源信息
-export const getHousingInfo = () => {
+export const getHousingInfo = type => {
   return dispatch => {
     axios
-      .get("/housing/message")
+      .get(api_message, { params: { type } })
       .then(res => {
         // 成功
         if (res.status === 200 && res.data.code === 0) {
@@ -110,14 +124,10 @@ export const getHousingInfo = () => {
 };
 
 // 根据id获取房源信息
-export const serial = id => { 
+export const serial = id => {
   return dispatch => {
     axios
-      .get("/housing/serial", {
-        params: {
-          id
-        }
-      })
+      .get(api_serial, { params: { id } })
       .then(res => {
         // 成功
         if (res.status === 200 && res.data.code === 0) {
@@ -129,4 +139,36 @@ export const serial = id => {
         throw err;
       });
   };
-}
+};
+
+// 推荐房源
+export const recommend = id => {
+  return dispatch => {
+    axios
+      .get(api_recommend, { params: { id } })
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({ type: RECOMMEND, data: res.data });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
+
+// 根据选择条件进行模糊搜索
+export const like = keywords => {
+  return dispatch => {
+    axios
+      .get(api_like, { params: keywords })
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({ type: LIKE, data: res.data });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};

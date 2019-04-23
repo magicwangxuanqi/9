@@ -8,6 +8,7 @@ const initState = {
     result: {
         houseType: "",
         houseTitle: "",
+        images: [],
         region: {
             name: "",
             pattern: {
@@ -42,7 +43,6 @@ const initState = {
 
 export default (state = initState, action) => {
     switch (action.type) {
-        // 委托房源信息
         case SERIAL:
             return {
                 ...action.data

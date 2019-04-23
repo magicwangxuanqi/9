@@ -12,6 +12,8 @@
         font-weight: bold;
     }
     aside {
+        display: flex;
+        align-items: center;
         width: 700px;
         padding: 20px 0;
         .label {

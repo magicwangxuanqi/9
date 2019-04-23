@@ -1,25 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
-import { serial } from "@/redux/action";
-import { Tag, Card, Button, Row, Col } from "antd";
+import { serial, recommend } from "@/redux/action";
+import { Tag, Card, Button, Row, Col, BackTop, Spin, Alert } from "antd";
+import { Link } from "react-router-dom";
 
 import NavBar from "@/components/NavBar";
 import MySlider from "@/components/MySlider/index";
 import "./RentDetail.scss";
 
 @connect(
-  state => state.SerialReducer,
-  { serial }
+  state => state,
+  { serial, recommend }
 )
 class RentDetail extends React.Component {
   componentDidMount() {
     const { match } = this.props;
     this.props.serial(match.params.id);
-    console.log(this.props.result);
+    this.props.recommend(match.params.id);
   }
+  // 页面重渲染
+  HeavyRendering = id => {
+    this.props.serial(id);
+    this.props.recommend(id);
+  };
   render() {
     return (
-      <div className="rent_detail">
+      <div className="rent_detail" style={{ position: "relative" }}>
         <NavBar />
         <section className="rent_detail-content">
           <Tag color="green" style={{ margin: "30px 0" }}>
@@ -29,7 +35,7 @@ class RentDetail extends React.Component {
             title={
               <div>
                 <h2 style={{ fontWeight: "bold" }}>
-                  {this.props.result.houseTitle}
+                  {this.props.SerialReducer.result.houseTitle}
                 </h2>
                 <p style={{ fontSize: "14px", color: "#AAA" }}>房东人很好</p>
               </div>
@@ -42,47 +48,55 @@ class RentDetail extends React.Component {
           >
             <div className="card-box">
               <section className="card-box-left">
-                <MySlider />
+                <MySlider images={this.props.SerialReducer.result} />
               </section>
               <section className="card-box-right">
                 <aside className="info">
                   <Row span={24}>
                     <h1>
-                      {this.props.result.price}&nbsp;
-                      <span className="unit">元/月</span>
+                      {this.props.SerialReducer.result.price}&nbsp;
+                      <span className="unit">元</span>
                     </h1>
                   </Row>
                   <Row style={{ margin: "20px 0" }}>
                     <Col span={12}>
-                      <p>面积：{this.props.result.region.area}平米</p>
+                      <p>
+                        面积：{this.props.SerialReducer.result.region.area}平米
+                      </p>
                     </Col>
                     <Col span={12}>
                       <p>
-                        房屋户型：{this.props.result.region.pattern.room}室
-                        {this.props.result.region.pattern.hail}厅
-                        {this.props.result.region.pattern.toilet}卫
+                        房屋户型：
+                        {this.props.SerialReducer.result.region.pattern.room}室
+                        {this.props.SerialReducer.result.region.pattern.hail}厅
+                        {this.props.SerialReducer.result.region.pattern.toilet}
+                        卫
                       </p>
                     </Col>
                   </Row>
                   <Row style={{ margin: "20px 0" }}>
                     <Col span={12}>
                       <p>
-                        楼层：第{this.props.result.floor.current}层(共
-                        {this.props.result.floor.all}层)
+                        楼层：第{this.props.SerialReducer.result.floor.current}
+                        层(共
+                        {this.props.SerialReducer.result.floor.all}层)
                       </p>
                     </Col>
                     <Col span={12}>
-                      <p>房屋朝向：{this.props.result.region.direction}</p>
+                      <p>
+                        房屋朝向：
+                        {this.props.SerialReducer.result.region.direction}
+                      </p>
                     </Col>
                   </Row>
                   <Row style={{ margin: "20px 0" }}>
                     <Col span={24}>
-                      <p>小区：{this.props.result.region.name}</p>
+                      <p>小区：{this.props.SerialReducer.result.region.name}</p>
                     </Col>
                   </Row>
                   <Row style={{ margin: "20px 0" }}>
                     <Col span={24}>
-                      <p>时间：{this.props.result.time}</p>
+                      <p>时间：{this.props.SerialReducer.result.time}</p>
                     </Col>
                   </Row>
                 </aside>
@@ -122,7 +136,7 @@ class RentDetail extends React.Component {
                     <span style={{ fontSize: "11px", color: "#999" }}>
                       租赁方式：
                     </span>
-                    &nbsp; 暂无数据
+                    &nbsp; 押一付三
                   </Col>
                   <Col span={8}>
                     <span style={{ fontSize: "11px", color: "#999" }}>
@@ -134,7 +148,7 @@ class RentDetail extends React.Component {
                     <span style={{ fontSize: "11px", color: "#999" }}>
                       供暖方式：
                     </span>
-                    &nbsp; 暂无数据
+                    &nbsp; 天然气
                   </Col>
                 </Row>
               </section>
@@ -163,44 +177,43 @@ class RentDetail extends React.Component {
           <br />
           <Card title="好房为您推荐">
             <Row>
-              {[1, 2, 3, 4].map((item, index) => {
+              {this.props.RecommendReducer.result.map((item, index) => {
                 return (
-                  <Col span={6} key={index} style={{ padding: "0 10px" }}>
-                    <img
-                      src="http://house.boolshop.com/upload/20180222/cb2e0ec020d02e444415bad5a154b036.jpg"
-                      alt=""
-                      style={{
-                        marginBottom: "10px",
-                        width: "250px",
-                        height: "auto"
-                      }}
-                    />
-                    <Row>
-                      <Col
-                        span={12}
-                        style={{
-                          paddingLeft: "5px"
-                        }}
+                  <Col span={6} key={index}>
+                    <Link to={`/rent_detail/${item._id}`}>
+                      <Card
+                        hoverable
+                        style={{ width: 240 }}
+                        cover={
+                          <img
+                            alt="example"
+                            src={
+                              item.images[0] ? item.images[0].thumbUrl : null
+                            }
+                            style={{ width: "238px", height: "278px" }}
+                            onClick={() => {
+                              this.HeavyRendering(item._id);
+                            }}
+                          />
+                        }
                       >
-                        象山公寓（二区）
-                      </Col>
-                      <Col
-                        span={12}
-                        style={{
-                          paddingRight: "5px",
-                          fontSize: "12px",
-                          color: "#999",
-                          textAlign: "right"
-                        }}
-                      >
-                        1室0厅/20平米
-                      </Col>
-                    </Row>
+                        <Card.Meta
+                          title={item.region.name}
+                          description={`${item.region.pattern.room}室${
+                            item.region.pattern.hail
+                          }厅
+                          ${item.region.pattern.toilet}卫 / ${
+                            item.region.area
+                          }平米`}
+                        />
+                      </Card>
+                    </Link>
                   </Col>
                 );
               })}
             </Row>
           </Card>
+          <BackTop />
         </section>
       </div>
     );

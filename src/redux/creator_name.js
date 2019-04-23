@@ -12,3 +12,9 @@ export const GETHOUSINGINFO = 'GETHOUSINGINFO';
 
 // 根据id获取房源信息
 export const SERIAL = 'SERIAL';
+
+// 推荐房子
+export const RECOMMEND = 'RECOMMEND';
+
+// 模糊搜索
+export const LIKE = 'LIKE';

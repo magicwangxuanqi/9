@@ -6,30 +6,29 @@ class Content extends Component {
   constructor() {
     super();
     this.state = {
-      placeholderText: "请输入区域、商圈或小区名开始找房",
-      optionVal: "used",
+      placeholderText: "请输入标题、小区、装修情况等内容查找二手房",
+      optionVal: "secondary",
       searchMsg: ""
     };
   }
   handleChange(val) {
-    console.log(val);
     switch (val) {
-      case "news":
+      case "bridalChamber":
         this.setState({
-          placeholderText: "请输入楼盘名称开始找房",
-          optionVal: "news"
+          placeholderText: "请输入标题、小区、装修情况等内容查找新房",
+          optionVal: "bridalChamber"
         });
         break;
       case "rent":
         this.setState({
-          placeholderText: "请输入区域、商圈或小区名开始找房",
+          placeholderText: "请输入标题、小区、装修情况等内容查找租房",
           optionVal: "rent"
         });
         break;
       default:
         this.setState({
-          placeholderText: "请输入区域、商圈或小区名开始找房",
-          optionVal: "used"
+          placeholderText: "请输入标题、小区、装修情况等内容查找二手房",
+          optionVal: "secondary"
         });
         break;
     }
@@ -45,13 +44,13 @@ class Content extends Component {
         </ul>
         <Input.Group compact>
           <Select
-            defaultValue="used"
+            defaultValue="secondary"
             style={{ width: 120 }}
             size="large"
             onChange={this.handleChange.bind(this)}
           >
-            <Select.Option value="used">找二手房</Select.Option>
-            <Select.Option value="news">找新房</Select.Option>
+            <Select.Option value="secondary">找二手房</Select.Option>
+            <Select.Option value="bridalChamber">找新房</Select.Option>
             <Select.Option value="rent">找租房</Select.Option>
           </Select>
           <Input
@@ -73,26 +72,27 @@ class Content extends Component {
             size="large"
             style={{ width: "50px" }}
             onClick={() => {
-              console.log(searchMsg);
+              let url = `/type/${optionVal}`;
+              url = searchMsg === "" ? url : `${url}?s=${searchMsg}`;
               switch (optionVal) {
-                case "used":
-                  history.push(`/secondary?search=${searchMsg}`);
+                case "secondary":
+                  history.push(url);
                   break;
-                case "news":
-                  history.push(`/bridalChamber?search=${searchMsg}`);
+                case "bridalChamber":
+                  history.push(url);
                   break;
                 default:
-                  history.push(`/rent?search=${searchMsg}`);
+                  history.push(url);
                   break;
               }
             }}
           />
         </Input.Group>
         <br />
-        <div className="sound">
+        {/* <div className="sound">
           <Icon type="sound" />
           <span>北京在售二手房 58626 套</span>
-        </div>
+        </div> */}
       </div>
     );
   }

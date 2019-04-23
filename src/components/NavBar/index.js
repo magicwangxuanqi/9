@@ -4,9 +4,9 @@ import "./index.scss";
 const NavBar = () => {
   const linkTag = [
     { title: "首页", path: "/" },
-    { title: "二手房", path: "/secondary?search=" },
-    { title: "新房", path: "/bridalChamber?search=" },
-    { title: "租房", path: "/rent?search=" },
+    { title: "二手房", path: "/type/secondary" },
+    { title: "新房", path: "/type/bridalChamber" },
+    { title: "租房", path: "/type/rent" },
     { title: "发布房源", path: "/rental" },
     { title: "中介登陆", path: "/admin" }
   ];

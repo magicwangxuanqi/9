@@ -7,7 +7,7 @@ class MySlider extends React.Component {
   componentDidMount() {
     new Swiper(".gallery-top", {
       loop: true,
-      loopedSlides: 3, //looped slides should be the same
+      // loopedSlides: 4, //looped slides should be the same
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev"
@@ -15,6 +15,7 @@ class MySlider extends React.Component {
     });
   }
   render() {
+    const { images } = this.props.images;
     return (
       <div className="my-slider">
         {/* <!-- Swiper --> */}
@@ -23,10 +24,14 @@ class MySlider extends React.Component {
           style={{ height: "80%", width: "100%" }}
         >
           <div className="swiper-wrapper">
-            {[1, 2, 3].map(item => {
+            {images.map((item, index) => {
               return (
-                <div className="swiper-slide" key={item}>
-                  <img src={require(`../../assets/${item}.jpg`)} alt="" />
+                <div className="swiper-slide" key={index}>
+                  <img
+                    src={item.thumbUrl}
+                    alt={item.name}
+                    style={{ width: "100%" }}
+                  />
                 </div>
               );
             })}

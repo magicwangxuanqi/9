@@ -17,15 +17,15 @@ class Nav extends Component {
       linkTag: [
         {
           text: "二手房",
-          path: "/secondary?search="
+          path: "/type/secondary"
         },
         {
           text: "新房",
-          path: "/bridalChamber?search="
+          path: "/type/bridalChamber"
         },
         {
           text: "租房",
-          path: "/rent?search="
+          path: "/type/rent"
         },
         {
           text: "发布房源",

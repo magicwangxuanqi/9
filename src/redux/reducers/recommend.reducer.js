@@ -1,5 +1,5 @@
 import moment from "moment";
-import { GETHOUSINGINFO, LIKE } from "../creator_name";
+import { RECOMMEND } from "../creator_name";
 
 const initState = {
   count: 0,
@@ -43,11 +43,7 @@ const initState = {
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case GETHOUSINGINFO:
-      return {
-        ...action.data
-      };
-    case LIKE:
+    case RECOMMEND:
       return {
         ...action.data
       };

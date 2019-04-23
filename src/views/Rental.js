@@ -6,6 +6,7 @@ import { entrust } from "@/redux/action";
 import { Input, Button, Select, Popconfirm, message } from "antd";
 import "./Rental.scss";
 import NavBar from "@/components/NavBar";
+import PicturesWall from "@/components/PicturesWall";
 
 @connect(
   state => state.HousingReducer,
@@ -17,6 +18,7 @@ class Rent extends Component {
     this.state = {
       houseType: "二手房",
       houseTitle: "",
+      images: [],
       region: {
         name: "",
         pattern: {
@@ -293,6 +295,21 @@ class Rent extends Component {
             </Select>
           </aside>
         </section>
+        {/* 图片上传 */}
+        <section>
+          <aside>
+            <span className="label">图片上传</span>
+            <PicturesWall
+              fileList={this.state.images}
+              handleChange={({ fileList }) => {
+                console.log(fileList);
+                this.setState({
+                  images: fileList
+                });
+              }}
+            />
+          </aside>
+        </section>
         {/* 楼层 */}
         <section>
           <aside>
@@ -404,6 +421,7 @@ class Rent extends Component {
       </div>
     );
   }
+
   // 各种判断
   judge = () => {
     if (this.state.houseTitle === "") {
@@ -412,6 +430,8 @@ class Rent extends Component {
       message.warning("小区名称不能为空，请输入小区名称");
     } else if (this.state.region.area === "") {
       message.warning("面积不能为空，请输入面积");
+    } else if (this.state.images === []) {
+      message.warning("请您上传图片");
     } else if (this.state.floor.current === "") {
       message.warning("当前所在楼层数为空，请输入当前所在楼层数");
     } else if (this.state.floor.all === "") {
@@ -427,7 +447,7 @@ class Rent extends Component {
         // 确认后的反馈，同时提交数据到action
         this.props.entrust(this.state);
         setTimeout(() => {
-          window.location.reload();
+          // window.location.reload();
         }, 1000);
       } catch (error) {
         message.error("发布房源信息失败");

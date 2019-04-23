@@ -14,20 +14,12 @@ const UserCenter = Loadable({
   loader: () => import("@/views/UserCenter"),
   loading: Loading
 });
+const Type = Loadable({
+  loader: () => import("@/views/Type"),
+  loading: Loading
+});
 const Rental = Loadable({
   loader: () => import("@/views/Rental"),
-  loading: Loading
-});
-const Secondary = Loadable({
-  loader: () => import("@/views/Secondary"),
-  loading: Loading
-});
-const BridalChamber = Loadable({
-  loader: () => import("@/views/BridalChamber"),
-  loading: Loading
-});
-const Rent = Loadable({
-  loader: () => import("@/views/Rent"),
   loading: Loading
 });
 const RentDetail = Loadable({
@@ -51,13 +43,11 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/userCenter/" component={UserCenter} />
+            <Route path="/type/:val" component={Type} />
             <Route path="/rental/" component={Rental} />
-            <Route path="/secondary/" component={Secondary} />
-            <Route path="/bridalChamber/" component={BridalChamber} />
-            <Route path="/rent/" component={Rent} />
             <Route path="/rent_detail/:id" component={RentDetail} />
             <Route path="/admin/" component={Admin} />
-            {/* <Route component={Err} /> */}
+            <Route component={Err} />
           </Switch>
         </div>
       </Router>

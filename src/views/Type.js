@@ -1,20 +1,21 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
 import { Empty } from "antd";
 import { connect } from "react-redux";
-import { getHousingInfo, like } from "@/redux/action";
+import { getHousingInfo } from "@/redux/action";
 
 import NavBar from "@/components/NavBar";
 import Search from "@/components/Search";
 import HouseType from "@/components/HouseType";
+import QS from "qs";
 
 @connect(
   state => state.GetHousingInfoReducer,
-  { getHousingInfo, like }
+  { getHousingInfo }
 )
 class Type extends React.Component {
   componentDidMount() {
     const { match } = this.props;
+    let queryObj = QS.parse(this.props.location.search.split("?")[1]);
     let type = "";
     switch (match.params.val) {
       case "secondary":
@@ -28,19 +29,19 @@ class Type extends React.Component {
         break;
     }
     // 获取接口数据信息
-    this.props.getHousingInfo(type);
+    this.props.getHousingInfo({ type, queryObj });
   }
   render() {
     const { match } = this.props;
-    console.log(match);
     return (
       <div className="type">
         <NavBar />
         <Search
-          like={this.props.like}
-          history={this.props.history}
           path="/secondary"
+          history={this.props.history}
+          params={this.props.match.params.val}
           searchVal={this.props.history.location.search.split("=")[1]}
+          getHousingInfo={this.props.getHousingInfo}
         />
         <HouseType
           title={

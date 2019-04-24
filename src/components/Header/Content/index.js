@@ -6,7 +6,7 @@ class Content extends Component {
   constructor() {
     super();
     this.state = {
-      placeholderText: "请输入标题、小区、装修情况等内容查找二手房",
+      placeholderText: "请输入标题或小区或房屋朝向查找二手房",
       optionVal: "secondary",
       searchMsg: ""
     };
@@ -15,21 +15,36 @@ class Content extends Component {
     switch (val) {
       case "bridalChamber":
         this.setState({
-          placeholderText: "请输入标题、小区、装修情况等内容查找新房",
+          placeholderText: "请输入标题或小区或房屋朝向查找新房",
           optionVal: "bridalChamber"
         });
         break;
       case "rent":
         this.setState({
-          placeholderText: "请输入标题、小区、装修情况等内容查找租房",
+          placeholderText: "请输入标题或小区或房屋朝向查找租房",
           optionVal: "rent"
         });
         break;
       default:
         this.setState({
-          placeholderText: "请输入标题、小区、装修情况等内容查找二手房",
+          placeholderText: "请输入标题或小区或房屋朝向查找二手房",
           optionVal: "secondary"
         });
+        break;
+    }
+  }
+  jumpUrl(optionVal, searchMsg, history) {
+    let url = `/type/${optionVal}`;
+    url = searchMsg === "" ? url : `${url}?s=${searchMsg}`;
+    switch (optionVal) {
+      case "secondary":
+        history.push(url);
+        break;
+      case "bridalChamber":
+        history.push(url);
+        break;
+      default:
+        history.push(url);
         break;
     }
   }
@@ -65,27 +80,14 @@ class Content extends Component {
                 searchMsg: e.target.value
               });
             }}
+            onPressEnter={() => this.jumpUrl(optionVal, searchMsg, history)}
           />
           <Button
             type="primary"
             icon="search"
             size="large"
             style={{ width: "50px" }}
-            onClick={() => {
-              let url = `/type/${optionVal}`;
-              url = searchMsg === "" ? url : `${url}?s=${searchMsg}`;
-              switch (optionVal) {
-                case "secondary":
-                  history.push(url);
-                  break;
-                case "bridalChamber":
-                  history.push(url);
-                  break;
-                default:
-                  history.push(url);
-                  break;
-              }
-            }}
+            onClick={() => this.jumpUrl(optionVal, searchMsg, history)}
           />
         </Input.Group>
         <br />

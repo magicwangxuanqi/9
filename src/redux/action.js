@@ -8,7 +8,6 @@ import {
   ENTRUST,
   GETHOUSINGINFO,
   SERIAL,
-  LIKE,
   RECOMMEND
 } from "./creator_name";
 
@@ -20,7 +19,6 @@ import {
   api_rental,
   api_message,
   api_serial,
-  api_like,
   api_recommend
 } from "../utils/api";
 
@@ -106,10 +104,10 @@ export const entrust = formData => {
 };
 
 // 获取房源信息
-export const getHousingInfo = type => {
+export const getHousingInfo = ({ type, queryObj, sectionObj }) => {
   return dispatch => {
     axios
-      .get(api_message, { params: { type } })
+      .get(api_message, { params: { type, ...queryObj, ...sectionObj } })
       .then(res => {
         // 成功
         if (res.status === 200 && res.data.code === 0) {
@@ -157,18 +155,3 @@ export const recommend = id => {
   };
 };
 
-// 根据选择条件进行模糊搜索
-export const like = keywords => {
-  return dispatch => {
-    axios
-      .get(api_like, { params: keywords })
-      .then(res => {
-        if (res.status === 200 && res.data.code === 0) {
-          dispatch({ type: LIKE, data: res.data });
-        }
-      })
-      .catch(err => {
-        throw err;
-      });
-  };
-};

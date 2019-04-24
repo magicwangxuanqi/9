@@ -1,5 +1,5 @@
 import React from "react";
-import { Select } from "antd";
+import { Select, Button } from "antd";
 
 import "./index.scss";
 
@@ -36,17 +36,54 @@ class Search extends React.Component {
     this.state = {
       price,
       decorate,
-      area
+      area,
+      sectionObj: {
+        price: "",
+        fitment: "",
+        area: ""
+      }
     };
   }
   handleChange(value, key) {
-    let section = {
-      [key]: decodeURI(value)
-    };
-    this.props.like(section);
+    Object.keys(this.state.sectionObj).forEach(item => {
+      if (item === key) {
+        this.state.sectionObj[item] = decodeURI(value);
+      }
+    });
+  }
+  handleClick(e, type, sectionObj) {
+    // 判断条件
+    if (
+      sectionObj.price === "" &&
+      sectionObj.fitment === "" &&
+      sectionObj.area === ""
+    ) {
+      this.props.getHousingInfo({ type });
+    } else {
+      let newSectionObj = {};
+      Object.values(sectionObj).forEach((item, index) => {
+        if (item !== "") {
+          newSectionObj[Object.keys(sectionObj)[index]] = item;
+        }
+      });
+      console.log(newSectionObj);
+      this.props.getHousingInfo({ type, sectionObj: newSectionObj });
+    }
   }
   render() {
     const { price, decorate, area } = this.state;
+    let type = "";
+    switch (this.props.params) {
+      case "secondary":
+        type = "二手房";
+        break;
+      case "bridalChamber":
+        type = "新房";
+        break;
+      case "rent":
+        type = "租房";
+        break;
+    }
     return (
       <div className="search">
         <section className="search">
@@ -70,7 +107,7 @@ class Search extends React.Component {
             <Select
               defaultValue="按装修"
               onChange={value => {
-                this.handleChange(value, "decorate");
+                this.handleChange(value, "fitment");
               }}
             >
               {decorate.map((item, index) => {
@@ -88,6 +125,7 @@ class Search extends React.Component {
               onChange={value => {
                 this.handleChange(value, "area");
               }}
+              ref="a"
             >
               {area.map((item, index) => {
                 return (
@@ -98,6 +136,20 @@ class Search extends React.Component {
               })}
             </Select>
           </aside>
+          <Button
+            type="primary"
+            onClick={e => {
+              this.handleClick(e, type, this.state.sectionObj);
+            }}
+          >
+            按条件查询
+          </Button>&nbsp;&nbsp;
+          <Button
+            type="dashed"
+            onClick={() => this.props.getHousingInfo({ type })}
+          >
+            显示全部房源信息
+          </Button>
         </section>
       </div>
     );

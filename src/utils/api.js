@@ -12,5 +12,3 @@ export const api_message = BASEURL + 'housing/message';
 export const api_serial = BASEURL + 'housing/serial';
 // 推荐房源
 export const api_recommend = BASEURL + 'housing/recommend';
-// 模糊搜索
-export const api_like = BASEURL + 'housing/like';

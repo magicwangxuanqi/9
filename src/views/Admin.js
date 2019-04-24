@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 import Login from "@/views/Admin/Login";
 import Register from "@/views/Admin/Register";
+import Main from "@/views/Admin/Main";
 import Err from "@/views/Err";
 
 import "./Admin.scss";
@@ -16,6 +17,7 @@ class Admin extends React.Component {
           <Route exact path={`${match.path}`} component={Login} />
           <Redirect from={`${match.path}login`} to={`${match.path}`} />
           <Route path={`${match.path}register`} component={Register} />
+          <Route path={`${match.path}main`} component={Main} />
           <Route component={Err} />
         </Switch>
       </div>

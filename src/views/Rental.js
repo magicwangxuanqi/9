@@ -447,7 +447,7 @@ class Rent extends Component {
         // 确认后的反馈，同时提交数据到action
         this.props.entrust(this.state);
         setTimeout(() => {
-          // window.location.reload();
+          window.location.reload();
         }, 1000);
       } catch (error) {
         message.error("发布房源信息失败");

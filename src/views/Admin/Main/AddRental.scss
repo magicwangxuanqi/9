@@ -1,0 +1,28 @@
+.add-rental {
+    margin-bottom: 20px;
+    background-color: #fff;
+    section {
+        display: flex;
+    }
+    aside {
+        display: flex;
+        align-items: center;
+        width: 700px;
+        padding: 20px 0;
+        .label {
+            display: inline-block;
+            width: 120px;
+            text-align: center;
+            font-weight: bold;
+        }
+    
+        .link_price {
+            margin-left: 50px;
+            font-size: 12px;
+        }
+    }
+    .submit {
+        padding-left: 200px;
+        padding-bottom: 20px;
+    }
+}

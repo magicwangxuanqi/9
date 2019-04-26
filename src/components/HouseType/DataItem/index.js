@@ -36,7 +36,7 @@ class DataItem extends React.Component {
                   {this.props.data.region.name}
                 </Link>{" "}
                 | {this.props.data.region.pattern.room}室
-                {/* {this.props.data.region.pattern.hail}厅 */}
+                {this.props.data.region.pattern.hail}厅
                 {this.props.data.region.pattern.toilet}卫 |
                 {this.props.data.region.area}平米 |{" "}
                 {this.props.data.region.direction} |{" "}

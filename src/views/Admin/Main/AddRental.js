@@ -1,18 +1,18 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import moment from "moment";
 import { connect } from "react-redux";
-import { submit_commissioned } from "@/redux/action";
+import { submit_rental } from "@/redux/action";
 
-import { Input, Button, Select, Popconfirm, message } from "antd";
-import "./Rental.scss";
-import NavBar from "@/components/NavBar";
+import { Input, Button, Select, Popconfirm, message, Breadcrumb } from "antd";
+import "./AddRental.scss";
 import PicturesWall from "@/components/PicturesWall";
 
 @connect(
-  state => state.EstrustReducer,
-  { submit_commissioned }
+  state => state.HousingReducer,
+  { submit_rental }
 )
-class Rental extends Component {
+class AddRental extends Component {
   constructor() {
     super();
     this.state = {
@@ -71,9 +71,20 @@ class Rental extends Component {
       toilet: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     }; // 格局
     return (
-      <div className="rent">
-        <NavBar />
-        <p className="title">委托房源</p>
+      <div className="add-rental">
+        <div style={{ padding: "20px" }}>
+          <Breadcrumb>
+            <Breadcrumb.Item style={{ fontWeight: "bold" }}>
+              房源管理
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/admin/main/infomation">房源信息列表</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+              <Link to="/admin/main/addrental">房源设置</Link>
+            </Breadcrumb.Item>
+          </Breadcrumb>
+        </div>
         {/* 房源类型 */}
         <section>
           <aside>
@@ -404,18 +415,18 @@ class Rental extends Component {
         {/* 提交 */}
         <div className="submit">
           <Popconfirm
-            title="是否确认发送委托信息？"
+            title="是否确认提交所有数据？"
             onConfirm={() => {
               this.judge();
             }}
             onCancel={() => {
               // 取消后的反馈
-              message.error("已取消委托");
+              message.error("已取消发布房源信息");
             }}
             okText="Yes"
             cancelText="No"
           >
-            <Button type="primary">提交委托</Button>
+            <Button type="primary" size="small">添加房源</Button>
           </Popconfirm>
         </div>
       </div>
@@ -445,16 +456,17 @@ class Rental extends Component {
     } else {
       try {
         // 确认后的反馈，同时提交数据到action
-        this.props.submit_commissioned(this.state);
+        this.props.submit_rental(this.state);
+        console.log(this.state)
         setTimeout(() => {
           window.location.reload();
         }, 1000);
       } catch (error) {
-        message.error("提交委托成功");
+        message.error("发布房源信息失败");
       }
-      message.success("提交委托失败");
+      message.success("发布房源信息成功");
     }
   };
 }
 
-export default Rental;
+export default AddRental;

@@ -1,5 +1,5 @@
 import moment from "moment";
-import { RENTAL } from "../creator_name";
+import { ENTRUST } from "../creator_name";
 
 const initState = {
   houseType: "二手房",
@@ -33,13 +33,18 @@ const initState = {
   // 称呼
   appellation: "",
   //   手机号
-  phone: ""
+  phone: "",
+  // 接单状态
+  accept: {
+    name: '',
+    status: false
+  }
 };
 
 export default (state = initState, action) => {
   switch (action.type) {
     // 发布房源信息
-    case RENTAL:
+    case ENTRUST:
       console.log(action.formData);
       return {
         ...state,
@@ -57,7 +62,11 @@ export default (state = initState, action) => {
           ...state.floor,
           ...action.formData.floor
         },
-        time: moment().format("YYYY-MM-DD HH:mm:ss")
+        time: moment().format("YYYY-MM-DD HH:mm:ss"),
+        accept: {
+          ...state.accept,
+          ...action.formData.accept
+        }
       };
     default:
       return state;

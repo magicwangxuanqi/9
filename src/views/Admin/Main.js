@@ -8,9 +8,8 @@ import AdminMenu from "@/Admin/AdminMenu";
 // 子路由
 import Index from "./Main/Index";
 import Entrust from "./Main/Entrust";
-import Rent from "./Main/Rent";
-import BridalChamber from "./Main/BridalChamber";
-import Secondary from "./Main/Secondary";
+import Infomation from "./Main/Infomation";
+import AddRental from "./Main/AddRental";
 import Setting from "./Main/Setting";
 import UserList from "./Main/UserList";
 // 错误404
@@ -32,12 +31,8 @@ class Main extends React.Component {
               <Route exact path={`${match.path}`} component={Index} />
               <Redirect from={`${match.path}/index`} to={`${match.path}`} />
               <Route path={`${match.path}/entrust`} component={Entrust} />
-              <Route path={`${match.path}/rent`} component={Rent} />
-              <Route
-                path={`${match.path}/bridalChamber`}
-                component={BridalChamber}
-              />
-              <Route path={`${match.path}/secondary`} component={Secondary} />
+              <Route path={`${match.path}/infomation`} component={Infomation} />
+              <Route path={`${match.path}/addrental`} component={AddRental} />
               <Route path={`${match.path}/setting`} component={Setting} />
               <Route path={`${match.path}/userlist`} component={UserList} />
               <Route component={Error} />

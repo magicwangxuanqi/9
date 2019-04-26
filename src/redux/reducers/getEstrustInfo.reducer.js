@@ -1,5 +1,5 @@
 import moment from "moment";
-import { GETHOUSINGINFO, DELETEHOUSINGINFO } from "../creator_name";
+import { GETESTRUSTINFO, UPDATERUSTINFO } from "../creator_name";
 
 const initState = {
   count: 0,
@@ -37,22 +37,31 @@ const initState = {
       // 称呼
       appellation: "",
       //   手机号
-      phone: ""
+      phone: "",
+      // 接单状态
+      accept: {
+        name: "",
+        status: false
+      }
     }
   ]
 };
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case GETHOUSINGINFO:
+    case GETESTRUSTINFO:
       return {
         ...action.data,
         loading: action.loading
       };
-    case DELETEHOUSINGINFO:
+    case UPDATERUSTINFO:
       return {
         ...state,
-        loading: action.loading
+        loading: action.loading,
+        accept: {
+          ...state.accept,
+          status: action.status
+        }
       }
     default:
       return state;

@@ -95,18 +95,7 @@ class AdminMenu extends React.Component {
               <Link to={`${this.props.match.path}/entrust`}>房屋委托列表</Link>
             </Menu.Item>
             <Menu.Item key="3">
-              <Link to={`${this.props.match.path}/rent`}>房屋出租列表</Link>
-            </Menu.Item>
-            <Menu.Item key="4">
-              <Link to={`${this.props.match.path}/bridalChamber`}>
-                新房出售列表
-              </Link>
-              >
-            </Menu.Item>
-            <Menu.Item key="5">
-              <Link to={`${this.props.match.path}/secondary`}>
-                二手房出售列表
-              </Link>
+              <Link to={`${this.props.match.path}/infomation`}>房源信息列表</Link>
             </Menu.Item>
           </SubMenu>
           <SubMenu

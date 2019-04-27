@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 
 class DataItem extends React.Component {
   render() {
+    console.log()
     return (
       <div className="data-item">
         <Row>
           <Col span={6}>
             <aside className="left">
-              <Link to={`/rent_detail/${this.props.data._id}`}>
+              <Link to={`/rent_detail/${this.props.data._id}/${this.props.data.houseType}`}>
                 <img
                   src={
                     this.props.data.images[0]
@@ -25,14 +26,14 @@ class DataItem extends React.Component {
           <Col span={12}>
             <aside className="middle">
               <div className="title">
-                <Link to={`/rent_detail/${this.props.data._id}`}>
+                <Link to={`/rent_detail/${this.props.data._id}/${this.props.data.houseType}`}>
                   {this.props.data.houseTitle}
                 </Link>
               </div>
               <div className="introduce">
                 <Icon type="home" />
                 &nbsp;{" "}
-                <Link to={`/rent_detail/${this.props.data._id}`}>
+                <Link to={`/rent_detail/${this.props.data._id}/${this.props.data.houseType}`}>
                   {this.props.data.region.name}
                 </Link>{" "}
                 | {this.props.data.region.pattern.room}室

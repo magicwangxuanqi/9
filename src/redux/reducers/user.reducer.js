@@ -52,7 +52,7 @@ export default (state = initState, action) => {
     case LOGIN:
       return {
         ...state,
-        isAuth: window.localStorage.getItem("token") ? true : false,
+        isAuth: window.sessionStorage.getItem("token") ? true : false,
         msg: "",
         userInfo: { ...action.data }
       };
@@ -60,8 +60,11 @@ export default (state = initState, action) => {
     case LOGOUT:
       return {
         ...state,
-        isAuth: window.localStorage.getItem("token") ? true : false,
-        msg: ""
+        isAuth: window.sessionStorage.getItem("token") ? true : false,
+        msg: "",
+        userInfo: {
+          username: ""
+        }
       };
     default:
       return state;

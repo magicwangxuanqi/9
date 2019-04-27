@@ -44,6 +44,10 @@ class Login extends React.Component {
           </Input.Group>
         </div>
         <br />
+        {/* 错误提示 */}
+        {this.props.msg ? (
+          <p style={{ color: "#f55" }}>{this.props.msg}</p>
+        ) : null}
         <p>
           还没有账号?
           <a

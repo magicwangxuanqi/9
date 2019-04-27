@@ -1,0 +1,35 @@
+.usercenter {
+    background-color: #eee;
+    &-left {
+        margin-right: 20px;
+        padding-bottom: 10px;
+        border: 2px solid #e6e5e5;
+        text-align: center;
+        background-color: #ffffff;
+        img {
+            margin-top: 30px;
+            margin-bottom: 10px;
+            width: 100px;
+            height: 100px;
+        }
+
+        a {
+            color: #555;
+        }
+
+        .left-link {
+            padding: 10px 0;
+
+            &:hover {
+                background-color: #1890ff;
+                cursor: pointer;
+
+                a {
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    &-right {}
+}

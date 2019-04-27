@@ -32,7 +32,7 @@ class AdminMenu extends React.Component {
       <div
         style={{
           width: 256,
-          height: '722px',
+          height: "722px",
           backgroundColor: this.state.theme == "light" ? "#fff" : "#001529"
         }}
       >
@@ -95,7 +95,9 @@ class AdminMenu extends React.Component {
               <Link to={`${this.props.match.path}/entrust`}>房屋委托列表</Link>
             </Menu.Item>
             <Menu.Item key="3">
-              <Link to={`${this.props.match.path}/infomation`}>房源信息列表</Link>
+              <Link to={`${this.props.match.path}/infomation`}>
+                房源信息列表
+              </Link>
             </Menu.Item>
           </SubMenu>
           <SubMenu
@@ -107,7 +109,9 @@ class AdminMenu extends React.Component {
               </span>
             }
           >
-            <Menu.Item key="3">用户服务协议</Menu.Item>
+            <Menu.Item key="3">
+              <Link to={`${this.props.match.path}/protocol`}>用户服务协议</Link>
+            </Menu.Item>
           </SubMenu>
         </Menu>
       </div>

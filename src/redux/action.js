@@ -4,7 +4,6 @@ import {
   ERRORMSG,
   REGISTER,
   LOGIN,
-  LOGOUT,
   ENTRUST,
   GETESTRUSTINFO,
   RENTAL,
@@ -12,7 +11,15 @@ import {
   SERIAL,
   RECOMMEND,
   UPDATERUSTINFO,
-  DELETEHOUSINGINFO
+  DELETEHOUSINGINFO,
+  ATTENTION,
+  UNFOLLOW,
+  ADMINERRORMSG,
+  ADMINREGISTER,
+  ADMINLOGIN,
+  ADMINUPDATEMSG,
+  ADMINGETADMININFO,
+  ADMINDEL
 } from "./creator_name";
 
 import axios from "axios";
@@ -24,10 +31,17 @@ import {
   api_info,
   api_rental,
   api_message,
+  api_attention,
+  api_unfollow,
   api_serial,
   api_recommend,
   api_updateStatus,
-  api_delserial
+  api_delserial,
+  api_admin_register,
+  api_admin_login,
+  api_admin_updateMsg,
+  api_admin_getAdminInfo,
+  api_admin_del
 } from "../utils/api";
 
 /** 用户相关action  */
@@ -98,7 +112,7 @@ export const login = ({ username, password }) => {
               username
             }
           });
-          window.localStorage.setItem("username", username);
+          window.sessionStorage.setItem("username", username);
           // 关闭登陆模态窗
           dispatch(login_model(false));
         } else {
@@ -108,10 +122,144 @@ export const login = ({ username, password }) => {
       });
   };
 };
-// 退出
-export const logout = () => ({
-  type: LOGOUT
+
+// admin错误提示
+export const adminErrorMsg = msg => ({
+  type: ADMINERRORMSG,
+  msg
 });
+// 管理员注册
+export const admin_register = ({
+  username,
+  password,
+  repeatPassword,
+  time
+}) => {
+  if (!username || !password) {
+    return adminErrorMsg("必须输入用户名和密码");
+  }
+  if (password !== repeatPassword) {
+    return adminErrorMsg("两次输入的密码不一致");
+  }
+  return dispatch => {
+    axios
+      .post(api_admin_register, {
+        username,
+        password,
+        time
+      })
+      .then(res => {
+        // 成功
+        if (res.staus === 200 && res.data.code === 0) {
+          dispatch({
+            type: ADMINREGISTER,
+            data: {
+              username
+            },
+            msg: res.data.msg
+          });
+        } else {
+          // 失败报错
+          dispatch(adminErrorMsg(res.data.msg));
+        }
+      });
+  };
+};
+// 管理员登陆
+export const admin_login = ({ username, password }) => {
+  if (!username || !password) {
+    return adminErrorMsg("用户名密码必须输入");
+  }
+  return dispatch => {
+    axios
+      .post(api_admin_login, {
+        username,
+        password
+      })
+      .then(res => {
+        // 成功
+        if (res.status === 200 && res.data.code === 0) {
+          const { username, _id } = res.data.userInfo;
+          dispatch({
+            type: ADMINLOGIN,
+            // data: {
+            //   username,
+            //   uid: _id
+            // },
+            msg: res.data.msg
+          });
+          window.sessionStorage.setItem("admin_username", username);
+          window.sessionStorage.setItem("admin_uid", _id);
+        } else {
+          // 失败报错
+          dispatch(adminErrorMsg(res.data.msg));
+        }
+      });
+  };
+};
+
+// 获取管理员信息
+export const admin_getAdminInfo = () => {
+  return dispatch => {
+    axios
+      .get(api_admin_getAdminInfo)
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({
+            type: ADMINGETADMININFO,
+            loading: false,
+            data: res.data.result
+          });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
+
+// 修改管理员用户信息
+export const admin_updateMsg = (uid, formData) => {
+  return dispatch => {
+    axios
+      .post(api_admin_updateMsg, {
+        uid,
+        ...formData
+      })
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({
+            type: ADMINUPDATEMSG,
+            data: formData
+          });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
+
+// 删除admin用户信息
+export const admin_del = id => {
+  return dispatch => {
+    axios
+      .post(api_admin_del, {
+        id
+      })
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({
+            type: ADMINDEL,
+            id
+          });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
 
 // 提交委托
 export const submit_commissioned = formData => {
@@ -255,6 +403,51 @@ export const getHousingInfo = obj => {
   }
 };
 
+// 关注
+export const attention = id => {
+  return dispatch => {
+    axios
+      .post(api_attention, {
+        id
+      })
+      .then(res => {
+        // 成功
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({
+            type: ATTENTION,
+            id,
+            attentionStatus: true
+          });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
+// 取消关注
+export const unfollow = id => {
+  return dispatch => {
+    axios
+      .post(api_unfollow, {
+        id
+      })
+      .then(res => {
+        // 成功
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({
+            type: UNFOLLOW,
+            id,
+            attentionStatus: false
+          });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
+
 // 根据id获取房源信息
 export const serial = id => {
   return dispatch => {
@@ -302,12 +495,13 @@ export const del_serial = id => {
 };
 
 // 推荐房源
-export const recommend = id => {
+export const recommend = (id, type) => {
   return dispatch => {
     axios
       .get(api_recommend, {
         params: {
-          id
+          id,
+          type
         }
       })
       .then(res => {

@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
+import {} from "@/";
 
 // 头部
 import AdminHeader from "@/Admin/AdminHeader";
@@ -12,17 +13,26 @@ import Infomation from "./Main/Infomation";
 import AddRental from "./Main/AddRental";
 import Setting from "./Main/Setting";
 import UserList from "./Main/UserList";
+import Protocol from "./Main/Protocol";
 // 错误404
 import Error from "./404";
+import { connect } from "react-redux";
+import { getEstrustInfo } from "@/redux/action";
 
+@connect(
+  state => state.GetEstrustInfoReducer,
+  { getEstrustInfo }
+)
 class Main extends React.Component {
+  componentDidMount() { 
+    this.props.getEstrustInfo();
+  }
   render() {
-    const { match } = this.props;
-    console.log(match);
+    const { match, history, count } = this.props;
     return (
       <div className="admin-main">
         <section>
-          <AdminHeader />
+          <AdminHeader history={history} count={count} />
         </section>
         <section style={{ display: "flex" }}>
           <AdminMenu match={match} />
@@ -35,6 +45,7 @@ class Main extends React.Component {
               <Route path={`${match.path}/addrental`} component={AddRental} />
               <Route path={`${match.path}/setting`} component={Setting} />
               <Route path={`${match.path}/userlist`} component={UserList} />
+              <Route path={`${match.path}/protocol`} component={Protocol} />
               <Route component={Error} />
             </Switch>
           </aside>

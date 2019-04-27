@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import moment from "moment";
 import { connect } from "react-redux";
 import { submit_commissioned } from "@/redux/action";
@@ -9,7 +10,7 @@ import NavBar from "@/components/NavBar";
 import PicturesWall from "@/components/PicturesWall";
 
 @connect(
-  state => state.EstrustReducer,
+  state => state,
   { submit_commissioned }
 )
 class Rental extends Component {
@@ -403,20 +404,26 @@ class Rental extends Component {
         </section>
         {/* 提交 */}
         <div className="submit">
-          <Popconfirm
-            title="是否确认发送委托信息？"
-            onConfirm={() => {
-              this.judge();
-            }}
-            onCancel={() => {
-              // 取消后的反馈
-              message.error("已取消委托");
-            }}
-            okText="Yes"
-            cancelText="No"
-          >
-            <Button type="primary">提交委托</Button>
-          </Popconfirm>
+          {window.sessionStorage.getItem('token') ? (
+            <Popconfirm
+              title="是否确认发送委托信息？"
+              onConfirm={() => {
+                this.judge();
+              }}
+              onCancel={() => {
+                // 取消后的反馈
+                message.error("已取消委托");
+              }}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary">提交委托</Button>
+            </Popconfirm>
+          ) : (
+            <Link to="/">
+              <Button type="primary">还未登陆，请先去首页登陆</Button>
+            </Link>
+          )}
         </div>
       </div>
     );

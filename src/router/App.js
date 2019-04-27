@@ -10,8 +10,8 @@ const Home = Loadable({
   loader: () => import("@/views/Home"),
   loading: Loading
 });
-const UserCenter = Loadable({
-  loader: () => import("@/views/UserCenter"),
+const Protocol = Loadable({
+  loader: () => import("@/views/Protocol"),
   loading: Loading
 });
 const Type = Loadable({
@@ -24,6 +24,10 @@ const Rental = Loadable({
 });
 const RentDetail = Loadable({
   loader: () => import("@/views/RentDetail"),
+  loading: Loading
+});
+const UserCenter = Loadable({
+  loader: () => import("@/views/UserCenter"),
   loading: Loading
 });
 const Admin = Loadable({
@@ -42,10 +46,11 @@ class App extends Component {
         <div className="router-switch">
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/userCenter/" component={UserCenter} />
+            <Route path="/protocol/" component={Protocol} />
             <Route path="/type/:val" component={Type} />
             <Route path="/rental/" component={Rental} />
-            <Route path="/rent_detail/:id" component={RentDetail} />
+            <Route path="/userCenter/" component={UserCenter} />
+            <Route path="/rent_detail/:id/:type" component={RentDetail} />
             <Route path="/admin/" component={Admin} />
             <Route component={Err} />
           </Switch>

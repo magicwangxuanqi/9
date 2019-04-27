@@ -6,6 +6,8 @@ import SerialReducer from "./serial.reducer";// 根据房源id获取房源信息
 import RecommendReducer from "./recommend.reducer";// 推荐房源reducer
 import GetEstrustInfoReducer from "./getEstrustInfo.reducer";
 import EstrustReducer from "./estrust.reducer";// 委托方源reducer
+import AdminReducer from "./admin.reducer";// admin的reducer
+import getAdminInfoReducer from "./getAdminInfo.reducer";// admin的reducer
 export default combineReducers({
   UserReducer,
   HousingReducer,
@@ -13,5 +15,7 @@ export default combineReducers({
   SerialReducer,
   RecommendReducer,
   GetEstrustInfoReducer,
-  EstrustReducer
+  EstrustReducer,
+  AdminReducer,
+  getAdminInfoReducer
 });

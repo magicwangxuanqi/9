@@ -9,12 +9,17 @@ class AdminHeader extends React.Component {
       <Menu>
         <Menu.Item>
           <Link to="/admin/main/setting">
-            <Icon type="setting" />
+            <Icon type="setting" />&nbsp;
             个人设置
           </Link>
         </Menu.Item>
-        <Menu.Item>
-          <Icon type="poweroff" />
+        <Menu.Item onClick={() => { 
+          window.sessionStorage.removeItem('admin_token');
+          window.sessionStorage.removeItem('admin_username');
+          window.sessionStorage.removeItem('admin_uid');
+          this.props.history.push('/admin/login');
+        }}>
+          <Icon type="poweroff" />&nbsp;
           退出
         </Menu.Item>
       </Menu>
@@ -26,7 +31,7 @@ class AdminHeader extends React.Component {
           <span className="symbol">
             <Link to="/admin/main/entrust" style={{ color: "#fff" }}>
               <Icon type="bell" />
-              <span className="right-count">3</span>
+              <span className="right-count">{this.props.count}</span>
             </Link>
           </span>
           <span style={{ marginLeft: "10px" }}>
@@ -36,7 +41,7 @@ class AdminHeader extends React.Component {
                 href="javascript:;"
                 style={{ cursor: "pointer" }}
               >
-                用户操作 <Icon type="down" />
+                <b style={{fontSize: '14px'}}>用户名：{window.sessionStorage.getItem('admin_username')}</b> <Icon type="down" />
               </span>
             </Dropdown>
           </span>

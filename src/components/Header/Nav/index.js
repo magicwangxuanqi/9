@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { login_model, register_model, logout } from "@/redux/action";
+import { login_model, register_model } from "@/redux/action";
 
 import "./index.scss";
 import { Row, Col, Icon, Button } from "antd";
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 @connect(
   state => state.UserReducer,
-  { login_model, register_model, logout }
+  { login_model, register_model }
 )
 class Nav extends Component {
   constructor() {
@@ -32,8 +32,10 @@ class Nav extends Component {
           path: "/rental"
         },
         {
-          text: "中介登陆",
-          path: "/admin"
+          text: "管理系统",
+          path: window.sessionStorage.getItem("admin_token")
+            ? "/admin/main"
+            : "/admin"
         }
       ]
     };
@@ -63,19 +65,20 @@ class Nav extends Component {
           </Col>
           <Col span={4} className="Nav-right">
             <Icon type="user" />
-            {this.props.isAuth ? (
+            {window.sessionStorage.getItem("token") ? (
               <div className="noAuth">
                 <span style={{ padding: "5px 10px" }}>
                   <Link to="/userCenter">
-                    {window.localStorage.getItem("username")}
+                    {window.sessionStorage.getItem("username")}
                   </Link>
                 </span>
                 <Button
                   type="danger"
                   size="small"
                   onClick={() => {
-                    window.localStorage.clear();
-                    this.props.logout();
+                    window.sessionStorage.removeItem('token');
+                    window.sessionStorage.removeItem('username');
+                    window.location.reload();
                   }}
                 >
                   退出

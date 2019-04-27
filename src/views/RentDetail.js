@@ -1,7 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { serial, recommend } from "@/redux/action";
-import { Tag, Card, Button, Row, Col, BackTop, Spin, Alert } from "antd";
+import { serial, recommend, attention, unfollow } from "@/redux/action";
+import {
+  Tag,
+  Card,
+  Button,
+  Row,
+  Col,
+  BackTop,
+  message,
+  Empty
+} from "antd";
 import { Link } from "react-router-dom";
 
 import NavBar from "@/components/NavBar";
@@ -10,18 +19,18 @@ import "./RentDetail.scss";
 
 @connect(
   state => state,
-  { serial, recommend }
+  { serial, recommend, attention, unfollow }
 )
 class RentDetail extends React.Component {
   componentDidMount() {
     const { match } = this.props;
     this.props.serial(match.params.id);
-    this.props.recommend(match.params.id);
+    this.props.recommend(match.params.id, match.params.type);
   }
   // 页面重渲染
-  HeavyRendering = id => {
+  HeavyRendering = (id, type) => {
     this.props.serial(id);
-    this.props.recommend(id);
+    this.props.recommend(id, type);
   };
   render() {
     return (
@@ -37,13 +46,40 @@ class RentDetail extends React.Component {
                 <h2 style={{ fontWeight: "bold" }}>
                   {this.props.SerialReducer.result.houseTitle}
                 </h2>
-                <p style={{ fontSize: "14px", color: "#AAA" }}>房东人很好</p>
+                <p style={{ fontSize: "14px", color: "#AAA" }}>
+                  {this.props.SerialReducer.result.houseType}
+                </p>
               </div>
             }
             extra={
-              <Button style={{ backgroundColor: "#39ac6a", color: "#fff" }}>
-                关注房源
-              </Button>
+              this.props.SerialReducer.attentionStatus ? (
+                <Button
+                  style={{ backgroundColor: "#39ac6a", color: "#fff" }}
+                  onClick={() => {
+                    this.props.unfollow(this.props.match.params.id);
+                    message.info("已取消关注");
+                  }}
+                >
+                  已关注
+                </Button>
+              ) : (
+                <Button
+                  style={{ backgroundColor: "#39ac6a", color: "#fff" }}
+                  onClick={() => {
+                    if (window.sessionStorage.getItem('token')) {
+                      this.props.attention(this.props.match.params.id);
+                      message.info("已关注房源");
+                    } else {
+                      message.info("您还未登陆，请先去首页进行登陆", 0.5);
+                      setTimeout(() => {
+                        this.props.history.push("/");
+                      }, 1000);
+                    }
+                  }}
+                >
+                  关注房源
+                </Button>
+              )
             }
           >
             <div className="card-box">
@@ -131,86 +167,147 @@ class RentDetail extends React.Component {
                 >
                   基本属性
                 </h4>
-                <Row style={{ padding: "20px 0" }}>
-                  <Col span={8}>
-                    <span style={{ fontSize: "11px", color: "#999" }}>
-                      租赁方式：
-                    </span>
-                    &nbsp; 押一付三
-                  </Col>
-                  <Col span={8}>
-                    <span style={{ fontSize: "11px", color: "#999" }}>
-                      装修情况：
-                    </span>
-                    &nbsp; 精装
-                  </Col>
-                  <Col span={8}>
-                    <span style={{ fontSize: "11px", color: "#999" }}>
-                      供暖方式：
-                    </span>
-                    &nbsp; 天然气
-                  </Col>
-                </Row>
+                {this.props.SerialReducer.result.houseType === "租房" ? (
+                  <Row style={{ padding: "20px 0" }}>
+                    <Col span={8}>
+                      <span style={{ fontSize: "11px", color: "#999" }}>
+                        租赁方式：
+                      </span>
+                      &nbsp; 押一付三
+                    </Col>
+                    <Col span={8}>
+                      <span style={{ fontSize: "11px", color: "#999" }}>
+                        装修情况：
+                      </span>
+                      &nbsp; 精装
+                    </Col>
+                    <Col span={8}>
+                      <span style={{ fontSize: "11px", color: "#999" }}>
+                        供暖方式：
+                      </span>
+                      &nbsp; 天然气
+                    </Col>
+                  </Row>
+                ) : (
+                  <Row style={{ padding: "20px 0" }}>
+                    <Col span={8}>
+                      <span style={{ fontSize: "11px", color: "#999" }}>
+                        户型结构：
+                      </span>
+                      &nbsp; 平层
+                    </Col>
+                    <Col span={8}>
+                      <span style={{ fontSize: "11px", color: "#999" }}>
+                        建筑类型：
+                      </span>
+                      &nbsp; 塔楼
+                    </Col>
+                    <Col span={8}>
+                      <span style={{ fontSize: "11px", color: "#999" }}>
+                        建筑结构：
+                      </span>
+                      &nbsp; 钢混结构
+                    </Col>
+                    <Col span={8}>
+                      <span style={{ fontSize: "11px", color: "#999" }}>
+                        装修情况：
+                      </span>
+                      &nbsp; {this.props.SerialReducer.result.region.fitment}
+                    </Col>
+                    <Col span={8}>
+                      <span style={{ fontSize: "11px", color: "#999" }}>
+                        梯户比例：
+                      </span>
+                      &nbsp; 2梯4户
+                    </Col>
+                    <Col span={8}>
+                      <span style={{ fontSize: "11px", color: "#999" }}>
+                        配备电梯：
+                      </span>
+                      &nbsp;{" "}
+                      {this.props.SerialReducer.result.region.elevator
+                        ? "有电梯"
+                        : "无电梯"}
+                    </Col>
+                    <Col span={8}>
+                      <span style={{ fontSize: "11px", color: "#999" }}>
+                        产权年限：
+                      </span>
+                      &nbsp; 70年
+                    </Col>
+                  </Row>
+                )}
               </section>
               <section>
-                <h4
-                  style={{
-                    paddingBottom: "10px",
-                    fontWeight: "bold",
-                    borderBottom: "2px solid #333"
-                  }}
-                >
-                  房源特色
-                </h4>
-                <aside style={{ marginTop: "30px" }}>
-                  <i className="iconfont icon-yushi" />
-                  <i className="iconfont icon-weishengjian" />
-                  <i className="iconfont icon-bingxiang" />
-                  <i className="iconfont icon-shugui" />
-                  <i className="iconfont icon-dianshiji" />
-                  <i className="iconfont icon-chufang" />
-                  <i className="iconfont icon-kongtiao-" />
-                </aside>
+                {this.props.SerialReducer.result.houseType === "租房" ? (
+                  <div>
+                    <h4
+                      style={{
+                        paddingBottom: "10px",
+                        fontWeight: "bold",
+                        borderBottom: "2px solid #333"
+                      }}
+                    >
+                      房源特色
+                    </h4>
+                    <aside style={{ marginTop: "30px" }}>
+                      <i className="iconfont icon-yushi" />
+                      <i className="iconfont icon-weishengjian" />
+                      <i className="iconfont icon-bingxiang" />
+                      <i className="iconfont icon-shugui" />
+                      <i className="iconfont icon-dianshiji" />
+                      <i className="iconfont icon-chufang" />
+                      <i className="iconfont icon-kongtiao-" />
+                    </aside>
+                  </div>
+                ) : (
+                  <b style={{ color: "#B0B3B4", fontSize: "12px" }}>
+                    注：房源所示“房屋用途、交易权属、建成年代、产权年限、建筑结构”仅供参考，购房时请以房本信息为准。
+                  </b>
+                )}
               </section>
             </div>
           </Card>
           <br />
           <Card title="好房为您推荐">
             <Row>
-              {this.props.RecommendReducer.result.map((item, index) => {
-                return (
-                  <Col span={6} key={index}>
-                    <Link to={`/rent_detail/${item._id}`}>
-                      <Card
-                        hoverable
-                        style={{ width: 240 }}
-                        cover={
-                          <img
-                            alt="example"
-                            src={
-                              item.images[0] ? item.images[0].thumbUrl : null
-                            }
-                            style={{ width: "238px", height: "278px" }}
-                            onClick={() => {
-                              this.HeavyRendering(item._id);
-                            }}
+              {this.props.RecommendReducer.result.length === 0 ? (
+                <Empty description="暂无推荐房源" />
+              ) : (
+                this.props.RecommendReducer.result.map((item, index) => {
+                  return (
+                    <Col span={6} key={index}>
+                      <Link to={`/rent_detail/${item._id}/${item.houseType}`}>
+                        <Card
+                          hoverable
+                          style={{ width: 240 }}
+                          cover={
+                            <img
+                              alt="example"
+                              src={
+                                item.images[0] ? item.images[0].thumbUrl : null
+                              }
+                              style={{ width: "238px", height: "278px" }}
+                              onClick={() => {
+                                this.HeavyRendering(item._id, item.houseType);
+                              }}
+                            />
+                          }
+                        >
+                          <Card.Meta
+                            title={item.region.name}
+                            description={`${item.region.pattern.room}室${
+                              item.region.pattern.hail
+                            }厅${item.region.pattern.toilet}卫 / ${
+                              item.region.area
+                            }平米`}
                           />
-                        }
-                      >
-                        <Card.Meta
-                          title={item.region.name}
-                          description={`${item.region.pattern.room}室${
-                            item.region.pattern.hail
-                          }厅
-                          ${item.region.pattern.toilet}卫 / ${
-                            item.region.area
-                          }平米`}
-                        />
-                      </Card>
-                    </Link>
-                  </Col>
-                );
-              })}
+                        </Card>
+                      </Link>
+                    </Col>
+                  );
+                })
+              )}
             </Row>
           </Card>
           <BackTop />

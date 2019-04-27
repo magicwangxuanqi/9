@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Input, Checkbox } from "antd";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 import { register } from "@/redux/action";
 @connect(
   null,
@@ -70,7 +71,7 @@ class Register extends React.Component {
             }}
             checked={this.state.checked}
           >
-            我已阅读并同意《租房隐私政策》及《租房用户服务协议》
+            我已阅读并同意<Link to='/protocol'>《租房用户服务协议》</Link>
           </Checkbox>
         </p>
         <p>

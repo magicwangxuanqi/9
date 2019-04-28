@@ -33,7 +33,7 @@ class AdminMenu extends React.Component {
         style={{
           width: 256,
           height: "722px",
-          backgroundColor: this.state.theme == "light" ? "#fff" : "#001529"
+          backgroundColor: this.state.theme === "light" ? "#fff" : "#001529"
         }}
       >
         {/* 侧边导航 */}

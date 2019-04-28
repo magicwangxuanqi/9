@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./index.scss";
-import { Select, Input, Button, Icon } from "antd";
+import { Select, Input, Button } from "antd";
 
 class Content extends Component {
   constructor() {

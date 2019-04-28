@@ -36,7 +36,7 @@ class Infomation extends React.Component {
         title: "房屋图片",
         dataIndex: "images",
         render: val => (
-          <img src={val} style={{ width: "40px", height: "40px" }} />
+          <img src={val} style={{ width: "40px", height: "40px" }} alt="" />
         ),
         className: "fz"
       },

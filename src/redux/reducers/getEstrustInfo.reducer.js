@@ -60,6 +60,7 @@ export default (state = initState, action) => {
         loading: action.loading,
         accept: {
           ...state.accept,
+          name: action.name,
           status: action.status
         }
       }

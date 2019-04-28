@@ -8,6 +8,10 @@ import GetEstrustInfoReducer from "./getEstrustInfo.reducer";
 import EstrustReducer from "./estrust.reducer";// 委托方源reducer
 import AdminReducer from "./admin.reducer";// admin的reducer
 import getAdminInfoReducer from "./getAdminInfo.reducer";// admin的reducer
+import getAttentionInfoReducer from "./getAttentionInfo.reducer";// 根据id获取房源的reducer
+import attentionReducer from "./attention.reducer";// 根据id获取房源的reducer
+import countReducer from "./count.reducer";// 获取关注人数的reducer
+
 export default combineReducers({
   UserReducer,
   HousingReducer,
@@ -17,5 +21,8 @@ export default combineReducers({
   GetEstrustInfoReducer,
   EstrustReducer,
   AdminReducer,
-  getAdminInfoReducer
+  getAdminInfoReducer,
+  getAttentionInfoReducer,
+  attentionReducer,
+  countReducer
 });

@@ -1,5 +1,5 @@
 import moment from "moment";
-import { GETHOUSINGINFO, DELETEHOUSINGINFO,ATTENTION } from "../creator_name";
+import { GETHOUSINGINFO, DELETEHOUSINGINFO } from "../creator_name";
 
 const initState = {
   count: 0,

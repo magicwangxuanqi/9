@@ -1,5 +1,5 @@
 import moment from "moment";
-import { SERIAL, ATTENTION, UNFOLLOW } from "../creator_name";
+import { SERIAL } from "../creator_name";
 
 const initState = {
   count: 0,
@@ -35,9 +35,7 @@ const initState = {
     // 称呼
     appellation: "",
     //   手机号
-    phone: "",
-    // 是否关注
-    attentionStatus: false
+    phone: ""
   }
 };
 
@@ -46,16 +44,6 @@ export default (state = initState, action) => {
     case SERIAL:
       return {
         ...action.data
-      };
-    case ATTENTION:
-      return {
-        ...state,
-        attentionStatus: action.attentionStatus
-      };
-    case UNFOLLOW:
-      return {
-        ...state,
-        attentionStatus: action.attentionStatus
       };
     default:
       return state;

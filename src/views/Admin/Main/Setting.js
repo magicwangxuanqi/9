@@ -54,7 +54,7 @@ class Setting extends React.Component {
         const uid = window.sessionStorage.getItem('admin_uid');
         this.props.admin_updateMsg(uid, this.state, moment().format("YYYY-MM-DD HH:mm:ss"));
         setTimeout(() => {
-          // window.location.reload();
+          window.location.reload();
         }, 1000);
       } catch (error) {
         message.error("更新管理员信息失败");
@@ -97,8 +97,6 @@ class Setting extends React.Component {
             <Select.Option value="男">男</Select.Option>
             <Select.Option value="女">女</Select.Option>
           </Select>
-          <p>头像</p>
-          <Input placeholder="请输入管理员名称" style={{ width: "50%" }} />
           <p>手机号</p>
           <Input
             placeholder="请输入手机号"

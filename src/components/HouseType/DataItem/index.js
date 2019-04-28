@@ -5,13 +5,16 @@ import { Link } from "react-router-dom";
 
 class DataItem extends React.Component {
   render() {
-    console.log()
     return (
       <div className="data-item">
         <Row>
           <Col span={6}>
             <aside className="left">
-              <Link to={`/rent_detail/${this.props.data._id}/${this.props.data.houseType}`}>
+              <Link
+                to={`/rent_detail/${this.props.data._id}/${
+                  this.props.data.houseType
+                }`}
+              >
                 <img
                   src={
                     this.props.data.images[0]
@@ -26,14 +29,22 @@ class DataItem extends React.Component {
           <Col span={12}>
             <aside className="middle">
               <div className="title">
-                <Link to={`/rent_detail/${this.props.data._id}/${this.props.data.houseType}`}>
+                <Link
+                  to={`/rent_detail/${this.props.data._id}/${
+                    this.props.data.houseType
+                  }`}
+                >
                   {this.props.data.houseTitle}
                 </Link>
               </div>
               <div className="introduce">
                 <Icon type="home" />
                 &nbsp;{" "}
-                <Link to={`/rent_detail/${this.props.data._id}/${this.props.data.houseType}`}>
+                <Link
+                  to={`/rent_detail/${this.props.data._id}/${
+                    this.props.data.houseType
+                  }`}
+                >
                   {this.props.data.region.name}
                 </Link>{" "}
                 | {this.props.data.region.pattern.room}室
@@ -50,9 +61,8 @@ class DataItem extends React.Component {
                 {this.props.data.floor.all}层)
               </div>
               <div className="heat">
-                <Icon type="star" />
-                &nbsp; {this.props.data.attention_number}人关注 / 发布时间：
-                {this.props.data.time}
+                <Icon type="dashboard" />
+                &nbsp; 发布时间：{this.props.data.time}
               </div>
               <div>
                 <Tag color="#FF8062">有租房需要预约</Tag>

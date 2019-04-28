@@ -48,7 +48,12 @@ class Rental extends Component {
       // 称呼
       appellation: "",
       //   手机号
-      phone: ""
+      phone: "",
+      // 接单状态
+      accept: {
+        name: "",
+        status: false
+      }
     };
   }
   render() {
@@ -457,9 +462,9 @@ class Rental extends Component {
           window.location.reload();
         }, 1000);
       } catch (error) {
-        message.error("提交委托成功");
+        message.error("提交委托失败");
       }
-      message.success("提交委托失败");
+      message.success("提交委托成功");
     }
   };
 }

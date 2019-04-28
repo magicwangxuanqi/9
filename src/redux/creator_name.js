@@ -15,10 +15,7 @@ export const UPDATERUSTINFO = 'UPDATERUSTINFO';
 export const RENTAL = 'RENTAL';
 export const GETHOUSINGINFO = 'GETHOUSINGINFO';
 export const DELETEHOUSINGINFO = 'DELETEHOUSINGINFO';
-// 加关注
-export const ATTENTION = 'ATTENTION';
-// 取消关注
-export const UNFOLLOW = 'UNFOLLOW';
+
 // 根据id获取房源信息
 export const SERIAL = 'SERIAL';
 
@@ -35,3 +32,12 @@ export const ADMINERRORMSG = 'ADMINERRORMSG'; //admin 错误信息
 export const ADMINUPDATEMSG = 'ADMINUPDATEMSG'; //更新用户信息
 export const ADMINGETADMININFO = 'ADMINGETADMININFO'; //获取用户信息
 export const ADMINDEL = 'ADMINDEL'; //删除用户信息
+
+
+
+export const ATTENTION = 'ATTENTION';// 加关注
+export const RMATTENTION = 'RMATTENTION';// 取消关注
+export const CONTENTATTENTION = 'CONTENTATTENTION';// 获取关注信息
+export const ITEMATTENTION = 'ITEMATTENTION';// 根据id获取关注信息
+export const COUNTATTENTION = 'COUNTATTENTION';// 根据id获取关注数量
+

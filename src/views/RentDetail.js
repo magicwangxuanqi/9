@@ -1,16 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
-import { serial, recommend, attention, unfollow } from "@/redux/action";
 import {
-  Tag,
-  Card,
-  Button,
-  Row,
-  Col,
-  BackTop,
-  message,
-  Empty
-} from "antd";
+  serial,
+  recommend,
+  attention,
+  rm_attention,
+  item_attention,
+  count_attention
+} from "@/redux/action";
+import { Tag, Card, Button, Row, Col, BackTop, message, Empty } from "antd";
 import { Link } from "react-router-dom";
 
 import NavBar from "@/components/NavBar";
@@ -19,18 +17,25 @@ import "./RentDetail.scss";
 
 @connect(
   state => state,
-  { serial, recommend, attention, unfollow }
+  { serial, recommend, attention, rm_attention, item_attention, count_attention }
 )
 class RentDetail extends React.Component {
   componentDidMount() {
     const { match } = this.props;
     this.props.serial(match.params.id);
     this.props.recommend(match.params.id, match.params.type);
+    this.props.item_attention(
+      window.sessionStorage.getItem("username"),
+      match.params.id
+    );
+    this.props.count_attention(match.params.id);
   }
   // 页面重渲染
   HeavyRendering = (id, type) => {
     this.props.serial(id);
     this.props.recommend(id, type);
+    this.props.item_attention(window.sessionStorage.getItem("username"), id);
+    this.props.count_attention(id);
   };
   render() {
     return (
@@ -52,34 +57,50 @@ class RentDetail extends React.Component {
               </div>
             }
             extra={
-              this.props.SerialReducer.attentionStatus ? (
-                <Button
-                  style={{ backgroundColor: "#39ac6a", color: "#fff" }}
-                  onClick={() => {
-                    this.props.unfollow(this.props.match.params.id);
-                    message.info("已取消关注");
-                  }}
-                >
-                  已关注
-                </Button>
-              ) : (
-                <Button
-                  style={{ backgroundColor: "#39ac6a", color: "#fff" }}
-                  onClick={() => {
-                    if (window.sessionStorage.getItem('token')) {
-                      this.props.attention(this.props.match.params.id);
-                      message.info("已关注房源");
-                    } else {
-                      message.info("您还未登陆，请先去首页进行登陆", 0.5);
+              <div>
+                {this.props.attentionReducer.result.length !== 0 ? (
+                  <Button
+                    style={{ backgroundColor: "#39ac6a", color: "#fff" }}
+                    onClick={() => {
+                      this.props.rm_attention(
+                        window.sessionStorage.getItem("username"),
+                        this.props.match.params.id
+                      );
+                      message.info("已取消关注");
                       setTimeout(() => {
-                        this.props.history.push("/");
-                      }, 1000);
-                    }
-                  }}
-                >
-                  关注房源
-                </Button>
-              )
+                        window.location.reload();
+                      }, 300);
+                    }}
+                  >
+                    已关注
+                  </Button>
+                ) : (
+                  <Button
+                    style={{ backgroundColor: "#39ac6a", color: "#fff" }}
+                      onClick={() => {
+                      console.log(this.props.SerialReducer.result)
+                      if (window.sessionStorage.getItem("token")) {
+                        this.props.attention(
+                          this.props.SerialReducer.result,
+                          window.sessionStorage.getItem("username")
+                        );
+                        message.info("已关注房源");
+                        setTimeout(() => {
+                          window.location.reload();
+                        }, 300);
+                      } else {
+                        message.info("您还未登陆，请先去首页进行登陆", 0.5);
+                        setTimeout(() => {
+                          this.props.history.push("/");
+                        }, 1000);
+                      }
+                    }}
+                  >
+                    关注房源
+                  </Button>
+                  )}
+                &nbsp;&nbsp;&nbsp;&nbsp;<Tag color="#f50">{this.props.countReducer.count}人关注</Tag>
+              </div>
             }
           >
             <div className="card-box">

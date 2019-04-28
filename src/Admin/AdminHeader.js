@@ -38,7 +38,6 @@ class AdminHeader extends React.Component {
             <Dropdown overlay={menu}>
               <span
                 className="ant-dropdown-link"
-                href="javascript:;"
                 style={{ cursor: "pointer" }}
               >
                 <b style={{fontSize: '14px'}}>用户名：{window.sessionStorage.getItem('admin_username')}</b> <Icon type="down" />

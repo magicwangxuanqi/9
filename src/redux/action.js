@@ -12,14 +12,17 @@ import {
   RECOMMEND,
   UPDATERUSTINFO,
   DELETEHOUSINGINFO,
-  ATTENTION,
-  UNFOLLOW,
   ADMINERRORMSG,
   ADMINREGISTER,
   ADMINLOGIN,
   ADMINUPDATEMSG,
   ADMINGETADMININFO,
-  ADMINDEL
+  ADMINDEL,
+  ATTENTION,
+  RMATTENTION,
+  CONTENTATTENTION,
+  ITEMATTENTION,
+  COUNTATTENTION
 } from "./creator_name";
 
 import axios from "axios";
@@ -31,8 +34,6 @@ import {
   api_info,
   api_rental,
   api_message,
-  api_attention,
-  api_unfollow,
   api_serial,
   api_recommend,
   api_updateStatus,
@@ -41,7 +42,12 @@ import {
   api_admin_login,
   api_admin_updateMsg,
   api_admin_getAdminInfo,
-  api_admin_del
+  api_admin_del,
+  api_attention,
+  api_rm_attention,
+  api_content_attention,
+  api_item_attention,
+  api_count_attention
 } from "../utils/api";
 
 /** 用户相关action  */
@@ -310,12 +316,13 @@ export const getEstrustInfo = filter => {
 };
 
 // 修改委托房源信息的接单状态
-export const update_estrust = (id, status) => {
+export const update_estrust = (id, status, name) => {
   return dispatch => {
     axios
       .post(api_updateStatus, {
         id,
-        status
+        status,
+        name
       })
       .then(res => {
         // 成功
@@ -324,6 +331,7 @@ export const update_estrust = (id, status) => {
             type: UPDATERUSTINFO,
             id,
             status,
+            name,
             loading: false
           });
         }
@@ -403,19 +411,67 @@ export const getHousingInfo = obj => {
   }
 };
 
+// 根据id获取关注数量
+export const count_attention = id => { 
+  return dispatch => {
+    axios
+      .get(api_count_attention, { params: { id } })
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({ type: COUNTATTENTION, count: res.data.count });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+}
+
+// 根据用户获取用户所关注的房源信息
+export const content_attention = username => {
+  return dispatch => {
+    axios
+      .get(api_content_attention, { params: { username } })
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({ type: CONTENTATTENTION, data: res.data.result });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
+
+// 根据用户和房源Id获取用户所关注的房源信息
+export const item_attention = (username, id) => {
+  return dispatch => {
+    axios
+      .get(api_item_attention, { params: { username, id } })
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({ type: ITEMATTENTION, data: res.data.result });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
+
 // 关注
-export const attention = id => {
+export const attention = (data, username) => {
   return dispatch => {
     axios
       .post(api_attention, {
-        id
+        ...data,
+        username
       })
       .then(res => {
         // 成功
         if (res.status === 200 && res.data.code === 0) {
           dispatch({
             type: ATTENTION,
-            id,
             attentionStatus: true
           });
         }
@@ -426,18 +482,18 @@ export const attention = id => {
   };
 };
 // 取消关注
-export const unfollow = id => {
+export const rm_attention = (username, id) => {
   return dispatch => {
     axios
-      .post(api_unfollow, {
+      .post(api_rm_attention, {
+        username,
         id
       })
       .then(res => {
         // 成功
         if (res.status === 200 && res.data.code === 0) {
           dispatch({
-            type: UNFOLLOW,
-            id,
+            type: RMATTENTION,
             attentionStatus: false
           });
         }

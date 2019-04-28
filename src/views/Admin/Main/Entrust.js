@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getEstrustInfo, update_estrust } from "@/redux/action";
 import {
@@ -20,7 +19,7 @@ import "./Entrust.scss";
 class Entrust extends React.Component {
   state = {
     appellation: "",
-    selectStatus: '未接单'
+    selectStatus: "未接单"
   };
   componentDidMount() {
     this.props.getEstrustInfo();
@@ -114,7 +113,11 @@ class Entrust extends React.Component {
                 type="danger"
                 size="small"
                 onClick={() => {
-                  this.props.update_estrust(record.key, true);
+                  this.props.update_estrust(
+                    record.key,
+                    true,
+                    window.sessionStorage.getItem("admin_username")
+                  );
                 }}
               >
                 未接单
@@ -135,7 +138,7 @@ class Entrust extends React.Component {
         "region.area": item.region.area,
         "region.pattern": item.region.pattern,
         "accept.name": item.accept.name,
-        "accept.status": item.accept.status ? "已接单" : "未接单",
+        "accept.status": item.accept ? "已接单" : "未接单",
         time: item.time,
         operation: item.accept.status
       });
@@ -184,7 +187,7 @@ class Entrust extends React.Component {
                   this.setState(
                     {
                       appellation: "",
-                      selectStatus: '未接单'
+                      selectStatus: "未接单"
                     },
                     () => {
                       this.props.getEstrustInfo(this.state);

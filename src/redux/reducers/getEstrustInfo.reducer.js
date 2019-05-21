@@ -1,5 +1,5 @@
 import moment from "moment";
-import { GETESTRUSTINFO, UPDATERUSTINFO } from "../creator_name";
+import { GETESTRUSTINFO, UPDATERUSTINFO, AUDITSTATUS, DELESTRUST } from "../creator_name";
 
 const initState = {
   count: 0,
@@ -42,7 +42,9 @@ const initState = {
       accept: {
         name: "",
         status: false
-      }
+      },
+      // 审核状态
+      "audit-status": ''
     }
   ]
 };
@@ -63,6 +65,17 @@ export default (state = initState, action) => {
           name: action.name,
           status: action.status
         }
+      }
+    case AUDITSTATUS:
+      return {
+        ...state,
+        loading: action.loading,
+        "audit-status": action.flag
+      }
+    case DELESTRUST:
+      return {
+        ...state, 
+        loading: action.loading
       }
     default:
       return state;

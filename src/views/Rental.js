@@ -17,6 +17,7 @@ class Rental extends Component {
   constructor() {
     super();
     this.state = {
+      uname: window.sessionStorage.getItem('username'),
       houseType: "二手房",
       houseTitle: "",
       images: [],
@@ -308,7 +309,6 @@ class Rental extends Component {
             <PicturesWall
               fileList={this.state.images}
               handleChange={({ fileList }) => {
-                console.log(fileList);
                 this.setState({
                   images: fileList
                 });

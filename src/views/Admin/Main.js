@@ -9,6 +9,7 @@ import AdminMenu from "@/Admin/AdminMenu";
 import Index from "./Main/Index";
 import Entrust from "./Main/Entrust";
 import Infomation from "./Main/Infomation";
+import Consumer from "./Main/Consumer";
 import AddRental from "./Main/AddRental";
 import Setting from "./Main/Setting";
 import UserList from "./Main/UserList";
@@ -41,6 +42,7 @@ class Main extends React.Component {
               <Redirect from={`${match.path}/index`} to={`${match.path}`} />
               <Route path={`${match.path}/entrust`} component={Entrust} />
               <Route path={`${match.path}/infomation`} component={Infomation} />
+              <Route path={`${match.path}/consumer`} component={Consumer} />
               <Route path={`${match.path}/addrental`} component={AddRental} />
               <Route path={`${match.path}/setting`} component={Setting} />
               <Route path={`${match.path}/userlist`} component={UserList} />

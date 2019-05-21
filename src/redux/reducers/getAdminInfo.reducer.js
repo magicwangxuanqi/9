@@ -22,6 +22,7 @@ export default (state = initState, action) => {
     // 获取所有用户信息
     case ADMINGETADMININFO:
       return {
+        ...state,
         loading: action.loading,
         result: [...action.data]
       };

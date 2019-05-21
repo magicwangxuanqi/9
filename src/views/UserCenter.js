@@ -1,12 +1,14 @@
 import React from "react";
 import Navbar from "@/components/NavBar";
-import { Row, Col } from "antd";
+import { Row, Col, Empty } from "antd";
 import { Route, Switch, Redirect } from "react-router-dom";
 
 import "./UserCenter.scss";
 
 import Attention from "./UserCenter/Attention";
+import HasEstrust from "./UserCenter/HasEstrust";
 import ChangePwd from "./UserCenter/ChangePwd";
+import Complete from "./UserCenter/Complete";
 import Error from "./Err";
 
 class UserCenter extends React.Component {
@@ -19,12 +21,19 @@ class UserCenter extends React.Component {
           <Col span={4} className="usercenter-left">
             <Row>
               <img
-                src="http://house.boolshop.com/upload/20190427/09e14af63dc0ae5a5a26f9165a4b602d.jpg"
+                src={
+                  window.sessionStorage.getItem("img")
+                    ? window.sessionStorage.getItem("img")
+                    : require("@/assets/noImg.svg")
+                }
                 alt=""
               />
             </Row>
             <Row style={{ marginBottom: "10px" }}>
-              欢迎您，{window.sessionStorage.getItem("username")}
+              欢迎您，
+              <i style={{ fontWeight: "bold" }}>
+                {window.sessionStorage.getItem("username")}
+              </i>
             </Row>
             <Row
               className="left-link"
@@ -37,7 +46,23 @@ class UserCenter extends React.Component {
             <Row
               className="left-link"
               onClick={() => {
-                history.push(`${match.path}changepwd`);
+                history.push(`${match.path}has-estrust`);
+              }}
+            >
+              <a href="javascript:;">已委托房源</a>
+            </Row>
+            <Row
+              className="left-link"
+              onClick={() => {
+                history.push(`${match.path}complete`);
+              }}
+            >
+              <a href="javascript:;">完善个人资料</a>
+            </Row>
+            <Row
+              className="left-link"
+              onClick={() => {
+                history.push(`${match.path}change-pwd`);
               }}
             >
               <a href="javascript:;">修改密码</a>
@@ -47,7 +72,9 @@ class UserCenter extends React.Component {
             <Switch>
               <Route exact path={`${match.path}`} component={Attention} />
               <Redirect from={`${match.path}attention`} to={`${match.path}`} />
-              <Route path={`${match.path}changepwd`} component={ChangePwd} />
+              <Route path={`${match.path}has-estrust`} component={HasEstrust} />
+              <Route path={`${match.path}complete`} component={Complete} />
+              <Route path={`${match.path}change-pwd`} component={ChangePwd} />
               <Route component={Error} />
             </Switch>
           </Col>

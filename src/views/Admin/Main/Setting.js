@@ -67,14 +67,14 @@ class Setting extends React.Component {
       <div className="setting">
         <AdminBreadcrumb />
         <section className="setting-form">
-          <p>中介名称</p>
+          <p>经纪人用户名</p>
           <Input
             placeholder="请输入管理员名称"
             style={{ width: "50%" }}
             value={this.state.username}
             onChange={v => this.handleChange("username", v)}
           />
-          <p>中介密码</p>
+          <p>经纪人密码</p>
           <Input.Password
             placeholder="请输入管理员密码"
             style={{ width: "50%" }}

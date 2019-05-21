@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { admin_getAdminInfo, admin_del } from "@/redux/action";
 import AdminBreadcrumb from "@/Admin/AdminBreadcrumb";
 import "./UserList.scss";
+import formatTime from "@/utils/date.js";
 
 @connect(
   state => state.getAdminInfoReducer,
@@ -24,7 +25,7 @@ class UserList extends React.Component {
         className: "fz"
       },
       {
-        title: "真实姓名",
+        title: "姓名",
         dataIndex: "real_name",
         className: "fz"
       },
@@ -69,7 +70,7 @@ class UserList extends React.Component {
         className: "fz"
       },
       {
-        title: "操作",
+        title: "操作/身份",
         dataIndex: "operation",
         className: "fz",
         render: (text, record) =>
@@ -122,7 +123,7 @@ class UserList extends React.Component {
         id_number: item.id_number,
         company: item.company,
         branch: item.branch,
-        time: item.time,
+        time: formatTime(item.time),
         operation: "删除"
       });
     });

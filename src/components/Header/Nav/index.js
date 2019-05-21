@@ -64,11 +64,23 @@ class Nav extends Component {
             </ul>
           </Col>
           <Col span={4} className="Nav-right">
-            <Icon type="user" />
             {window.sessionStorage.getItem("token") ? (
               <div className="noAuth">
                 <span style={{ padding: "5px 10px" }}>
                   <Link to="/userCenter">
+                    <img
+                      src={
+                        window.sessionStorage.getItem("img")
+                          ? window.sessionStorage.getItem("img")
+                          : require("@/assets/noImg.svg")
+                      }
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        borderRadius: "50%"
+                      }}
+                      alt=""
+                    />&nbsp;&nbsp;&nbsp;
                     {window.sessionStorage.getItem("username")}
                   </Link>
                 </span>
@@ -76,8 +88,9 @@ class Nav extends Component {
                   type="danger"
                   size="small"
                   onClick={() => {
-                    window.sessionStorage.removeItem('token');
-                    window.sessionStorage.removeItem('username');
+                    window.sessionStorage.removeItem("token");
+                    window.sessionStorage.removeItem("username");
+                    window.sessionStorage.removeItem("img");
                     window.location.reload();
                   }}
                 >

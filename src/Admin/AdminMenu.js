@@ -99,6 +99,11 @@ class AdminMenu extends React.Component {
                 房源信息列表
               </Link>
             </Menu.Item>
+            <Menu.Item key="4">
+              <Link to={`${this.props.match.path}/consumer`}>
+                普通用户列表
+              </Link>
+            </Menu.Item>
           </SubMenu>
           <SubMenu
             key="sub3"
@@ -109,7 +114,7 @@ class AdminMenu extends React.Component {
               </span>
             }
           >
-            <Menu.Item key="3">
+            <Menu.Item key="5">
               <Link to={`${this.props.match.path}/protocol`}>用户服务协议</Link>
             </Menu.Item>
           </SubMenu>

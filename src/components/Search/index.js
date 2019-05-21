@@ -66,7 +66,6 @@ class Search extends React.Component {
           newSectionObj[Object.keys(sectionObj)[index]] = item;
         }
       });
-      console.log(newSectionObj);
       this.props.getHousingInfo({ type, sectionObj: newSectionObj });
     }
   }

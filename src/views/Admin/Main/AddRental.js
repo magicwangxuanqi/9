@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import moment from "moment";
 import { connect } from "react-redux";
 import { submit_rental } from "@/redux/action";
@@ -47,7 +47,14 @@ class AddRental extends Component {
       // 称呼
       appellation: "",
       //   手机号
-      phone: ""
+      phone: "",
+      // 发布人
+      issuer: {
+        name: window.sessionStorage.getItem("admin_name")
+        ? window.sessionStorage.getItem("admin_name")
+        : window.sessionStorage.getItem("admin_username"),
+        phone: window.sessionStorage.getItem("admin_phone")
+      }
     };
   }
   render() {
@@ -313,7 +320,6 @@ class AddRental extends Component {
             <PicturesWall
               fileList={this.state.images}
               handleChange={({ fileList }) => {
-                console.log(fileList);
                 this.setState({
                   images: fileList
                 });
@@ -426,7 +432,9 @@ class AddRental extends Component {
             okText="Yes"
             cancelText="No"
           >
-            <Button type="primary" size="small">添加房源</Button>
+            <Button type="primary" size="small">
+              添加房源
+            </Button>
           </Popconfirm>
         </div>
       </div>
@@ -457,7 +465,6 @@ class AddRental extends Component {
       try {
         // 确认后的反馈，同时提交数据到action
         this.props.submit_rental(this.state);
-        console.log(this.state)
         setTimeout(() => {
           window.location.reload();
         }, 1000);

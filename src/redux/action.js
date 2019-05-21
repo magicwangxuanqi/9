@@ -1,4 +1,7 @@
 import {
+  GETUSER,
+  DELETEUSER,
+  COMPLETEUSER,
   LOGINMODEL,
   REGISTERMODEL,
   ERRORMSG,
@@ -11,6 +14,7 @@ import {
   SERIAL,
   RECOMMEND,
   UPDATERUSTINFO,
+  AUDITSTATUS,
   DELETEHOUSINGINFO,
   ADMINERRORMSG,
   ADMINREGISTER,
@@ -22,21 +26,27 @@ import {
   RMATTENTION,
   CONTENTATTENTION,
   ITEMATTENTION,
-  COUNTATTENTION
+  COUNTATTENTION,
+  DELESTRUST
 } from "./creator_name";
 
 import axios from "axios";
 // 导入api
 import {
+  api_getUserInfo,
+  api_delete_user,
+  api_complete_user,
   api_register,
   api_login,
   api_entrust,
+  api_delestrust,
   api_info,
   api_rental,
   api_message,
   api_serial,
   api_recommend,
   api_updateStatus,
+  api_audit_status,
   api_delserial,
   api_admin_register,
   api_admin_login,
@@ -66,6 +76,68 @@ export const errorMsg = msg => ({
   type: ERRORMSG,
   msg
 });
+// 获取普通用户信息
+export const getUserInfo = () => {
+  return dispatch => {
+    axios
+      .get(api_getUserInfo)
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({
+            type: GETUSER,
+            loading: false,
+            result: res.data.result
+          });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
+// 删除普通用户
+export const delUser = id => {
+  return dispatch => {
+    axios
+      .post(api_delete_user, {
+        id
+      })
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({
+            type: DELETEUSER,
+            id,
+            loading: false
+          });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
+// 完善普通用户信息
+export const completeUser = (username, formData) => {
+  return dispatch => {
+    axios
+      .post(api_complete_user, {
+        username,
+        ...formData
+      })
+      .then(res => {
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({
+            type: COMPLETEUSER,
+            loading: false,
+            formData
+          });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
 // 注册
 export const register = ({ username, password, repeatPassword }) => {
   if (!username || !password) {
@@ -108,7 +180,6 @@ export const login = ({ username, password }) => {
         password
       })
       .then(res => {
-        console.log(res.data);
         // 成功
         if (res.status === 200 && res.data.code === 0) {
           const { username } = res.data.userInfo;
@@ -119,6 +190,12 @@ export const login = ({ username, password }) => {
             }
           });
           window.sessionStorage.setItem("username", username);
+          window.sessionStorage.setItem(
+            "img",
+            res.data.userInfo.headPortrait.length === 0
+              ? ""
+              : res.data.userInfo.headPortrait[0].thumbUrl
+          );
           // 关闭登陆模态窗
           dispatch(login_model(false));
         } else {
@@ -171,6 +248,7 @@ export const admin_register = ({
       });
   };
 };
+
 // 管理员登陆
 export const admin_login = ({ username, password }) => {
   if (!username || !password) {
@@ -188,14 +266,18 @@ export const admin_login = ({ username, password }) => {
           const { username, _id } = res.data.userInfo;
           dispatch({
             type: ADMINLOGIN,
-            // data: {
-            //   username,
-            //   uid: _id
-            // },
             msg: res.data.msg
           });
           window.sessionStorage.setItem("admin_username", username);
           window.sessionStorage.setItem("admin_uid", _id);
+          window.sessionStorage.setItem(
+            "admin_name",
+            res.data.userInfo.real_name ? res.data.userInfo.real_name : ""
+          );
+          window.sessionStorage.setItem(
+            "admin_phone",
+            res.data.userInfo.phone_number ? res.data.userInfo.phone_number : "暂无"
+          );
         } else {
           // 失败报错
           dispatch(adminErrorMsg(res.data.msg));
@@ -291,12 +373,20 @@ export const submit_commissioned = formData => {
 };
 
 // 获取委托信息
-export const getEstrustInfo = filter => {
+export const getEstrustInfo = (filter, user) => {
   return async dispatch => {
     let res = "";
     try {
       if (!filter) {
-        res = await axios.get(api_info);
+        if (user) {
+          res = await axios.get(api_info, {
+            params: {
+              user
+            }
+          });
+        } else {
+          res = await axios.get(api_info);
+        }
       } else {
         res = await axios.get(api_info, {
           params: filter
@@ -339,6 +429,39 @@ export const update_estrust = (id, status, name) => {
   };
 };
 
+// 审核
+export const audit_status = (id, flag) => {
+  return dispatch => {
+    axios.post(api_audit_status, { id, flag }).then(res => {
+      if (res.status === 200 && res.data.code === 0) {
+        dispatch({ type: AUDITSTATUS, id, flag, loading: false });
+      }
+    });
+  };
+};
+
+// 删除委托
+export const del_estrust = id => {
+  return dispatch => {
+    axios
+      .post(api_delestrust, {
+        id
+      })
+      .then(res => {
+        // 成功
+        if (res.status === 200 && res.data.code === 0) {
+          dispatch({
+            type: DELESTRUST,
+            id,
+            loading: false
+          });
+        }
+      })
+      .catch(err => {
+        throw err;
+      });
+  };
+};
 // 提交房源信息
 export const submit_rental = formData => {
   return dispatch => {
@@ -412,29 +535,43 @@ export const getHousingInfo = obj => {
 };
 
 // 根据id获取关注数量
-export const count_attention = id => { 
+export const count_attention = id => {
   return dispatch => {
     axios
-      .get(api_count_attention, { params: { id } })
+      .get(api_count_attention, {
+        params: {
+          id
+        }
+      })
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {
-          dispatch({ type: COUNTATTENTION, count: res.data.count });
+          dispatch({
+            type: COUNTATTENTION,
+            count: res.data.count
+          });
         }
       })
       .catch(err => {
         throw err;
       });
   };
-}
+};
 
 // 根据用户获取用户所关注的房源信息
 export const content_attention = username => {
   return dispatch => {
     axios
-      .get(api_content_attention, { params: { username } })
+      .get(api_content_attention, {
+        params: {
+          username
+        }
+      })
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {
-          dispatch({ type: CONTENTATTENTION, data: res.data.result });
+          dispatch({
+            type: CONTENTATTENTION,
+            data: res.data.result
+          });
         }
       })
       .catch(err => {
@@ -447,10 +584,18 @@ export const content_attention = username => {
 export const item_attention = (username, id) => {
   return dispatch => {
     axios
-      .get(api_item_attention, { params: { username, id } })
+      .get(api_item_attention, {
+        params: {
+          username,
+          id
+        }
+      })
       .then(res => {
         if (res.status === 200 && res.data.code === 0) {
-          dispatch({ type: ITEMATTENTION, data: res.data.result });
+          dispatch({
+            type: ITEMATTENTION,
+            data: res.data.result
+          });
         }
       })
       .catch(err => {

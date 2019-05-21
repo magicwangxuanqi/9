@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { getHousingInfo, del_serial } from "@/redux/action";
+import { getHousingInfo, del_serial, del_estrust } from "@/redux/action";
 import { Table, Button, Icon, Breadcrumb, Popconfirm, message } from "antd";
 import "./Information.scss";
+import formatTime from "@/utils/date.js";
 
 @connect(
   state => state.GetHousingInfoReducer,
-  { getHousingInfo, del_serial }
+  { getHousingInfo, del_serial, del_estrust }
 )
 class Infomation extends React.Component {
   componentDidMount() {
@@ -18,6 +19,11 @@ class Infomation extends React.Component {
     let data = [];
     const columns = [
       {
+        title: "序号",
+        dataIndex: "index",
+        className: "fz"
+      },
+      {
         title: "房源类型",
         dataIndex: "houseType",
         className: "fz"
@@ -25,7 +31,8 @@ class Infomation extends React.Component {
       {
         title: "标题",
         dataIndex: "houseTitle",
-        className: "fz"
+        className: "fz",
+        width: "100px"
       },
       {
         title: "小区名称",
@@ -48,8 +55,9 @@ class Infomation extends React.Component {
       {
         title: "价格",
         dataIndex: "price",
-        render: text => <span>{text}&nbsp;元</span>,
-        className: "fz"
+        render: text => <span>{text}</span>,
+        className: "fz",
+        width: "80px"
       },
       {
         title: "户型",
@@ -64,12 +72,14 @@ class Infomation extends React.Component {
       {
         title: "楼层",
         dataIndex: "floor.current",
-        className: "fz"
+        className: "fz",
+        width: "60px"
       },
       {
         title: "总楼层",
         dataIndex: "floor.all",
-        className: "fz"
+        className: "fz",
+        width: "60px"
       },
       {
         title: "面积",
@@ -89,7 +99,8 @@ class Infomation extends React.Component {
       {
         title: "装修情况",
         dataIndex: "region.fitment",
-        className: "fz"
+        className: "fz",
+        width: "70px"
       },
       {
         title: "是否有电梯",
@@ -100,6 +111,11 @@ class Infomation extends React.Component {
         title: "添加时间",
         dataIndex: "time",
         className: "fz"
+      },
+      {
+        title: '发布人',
+        dataIndex: 'issuer',
+        className: 'fz'
       },
       {
         title: "操作",
@@ -121,7 +137,14 @@ class Infomation extends React.Component {
               type="danger"
               size="small"
               onClick={() => {
-                this.props.del_serial(record.key);
+                if (result[record.index].extrustId) {
+                  // 删除房源信息
+                  this.props.del_serial(record.key);
+                  // 删除委托房源
+                  this.props.del_estrust(result[record.index].extrustId);
+                } else {
+                  this.props.del_serial(record.key);
+                }
               }}
             >
               {text}
@@ -134,20 +157,25 @@ class Infomation extends React.Component {
     result.forEach((item, index) => {
       data.push({
         key: item._id ? item._id : index,
+        index: index,
         houseType: item.houseType,
         houseTitle: item.houseTitle,
         "region.name": item.region.name,
         images: item.images[0] ? item.images[0].thumbUrl : null,
-        "accept.name": "张三",
-        price: item.price,
+        "accept.name": item.appellation,
+        price:
+          item.houseType === "租房"
+            ? item.price + "元/月"
+            : parseInt(item.price / 10000) + "万元",
         "region.pattern": item.region.pattern,
-        "floor.current": item.floor.current,
-        "floor.all": item.floor.all,
+        "floor.current": `第${item.floor.current}层`,
+        "floor.all": `共${item.floor.all}层`,
         "region.area": item.region.area,
         "region.direction": item.region.direction,
         "region.fitment": item.region.fitment,
         "region.elevator": item.region.elevator ? "是" : "否",
-        time: item.time,
+        time: formatTime(item.time),
+        issuer: item.issuer.name,
         operation: "删除"
       });
     });

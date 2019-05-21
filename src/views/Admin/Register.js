@@ -27,7 +27,7 @@ class Register extends React.Component {
       <div className="admin-register">
         <section className="card">
           <Card bordered={false} style={{ width: 420 }}>
-            <Card.Meta title="中介注册" style={{ textAlign: "center" }} />
+            <Card.Meta title="经纪人注册" style={{ textAlign: "center" }} />
             <Input
               style={{ marginBottom: "20px", marginTop: "20px" }}
               placeholder="用户名"

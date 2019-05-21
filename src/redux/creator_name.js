@@ -5,11 +5,18 @@ export const ERRORMSG = "ERRORMSG";
 export const REGISTER = "REGISTER";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
+// 获取普通用户信息
+export const GETUSER = "GETUSER";
+// 删除普通用户信息
+export const DELETEUSER = "DELETEUSER";
+export const COMPLETEUSER = "COMPLETEUSER";
 
 // 委托房源信息
 export const ENTRUST = 'ENTRUST';
 export const GETESTRUSTINFO = 'GETESTRUSTINFO';
 export const UPDATERUSTINFO = 'UPDATERUSTINFO';
+export const AUDITSTATUS = 'AUDITSTATUS';
+export const DELESTRUST = 'DELESTRUST';
 
 // 房源信息 creator
 export const RENTAL = 'RENTAL';

@@ -14,10 +14,18 @@ import { Link } from "react-router-dom";
 import NavBar from "@/components/NavBar";
 import MySlider from "@/components/MySlider/index";
 import "./RentDetail.scss";
+import formatTime from "@/utils/date.js";
 
 @connect(
   state => state,
-  { serial, recommend, attention, rm_attention, item_attention, count_attention }
+  {
+    serial,
+    recommend,
+    attention,
+    rm_attention,
+    item_attention,
+    count_attention
+  }
 )
 class RentDetail extends React.Component {
   componentDidMount() {
@@ -77,8 +85,7 @@ class RentDetail extends React.Component {
                 ) : (
                   <Button
                     style={{ backgroundColor: "#39ac6a", color: "#fff" }}
-                      onClick={() => {
-                      console.log(this.props.SerialReducer.result)
+                    onClick={() => {
                       if (window.sessionStorage.getItem("token")) {
                         this.props.attention(
                           this.props.SerialReducer.result,
@@ -98,8 +105,9 @@ class RentDetail extends React.Component {
                   >
                     关注房源
                   </Button>
-                  )}
-                &nbsp;&nbsp;&nbsp;&nbsp;<Tag color="#f50">{this.props.countReducer.count}人关注</Tag>
+                )}
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <Tag color="#f50">{this.props.countReducer.count}人关注</Tag>
               </div>
             }
           >
@@ -153,7 +161,9 @@ class RentDetail extends React.Component {
                   </Row>
                   <Row style={{ margin: "20px 0" }}>
                     <Col span={24}>
-                      <p>时间：{this.props.SerialReducer.result.time}</p>
+                      <p>
+                        时间：{formatTime(this.props.SerialReducer.result.time)}
+                      </p>
                     </Col>
                   </Row>
                 </aside>
@@ -162,12 +172,16 @@ class RentDetail extends React.Component {
                     <Col span={8} />
                     <Col span={16}>
                       <div className="self_info">
-                        <span className="name">张三</span>
+                        <span className="name">
+                          {this.props.SerialReducer.result.issuer.name}
+                        </span>
                         <span className="identity">平台人员</span>
                       </div>
                       <p className="phone">
                         联系电话：
-                        <span style={{ fontWeight: "bold" }}>15659266753</span>
+                        <span style={{ fontWeight: "bold" }}>
+                          {this.props.SerialReducer.result.issuer.phone}
+                        </span>
                       </p>
                     </Col>
                   </Row>

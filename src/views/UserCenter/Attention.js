@@ -29,7 +29,11 @@ class Attention extends React.Component {
               return (
                 <div
                   key={index}
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                    borderBottom: "1px solid #e8e8e8",
+                    marginBottom: "10px"
+                  }}
                   onClick={() =>
                     this.props.history.push(
                       `/rent_detail/${item.productId}/${item.houseType}`
@@ -83,7 +87,16 @@ class Attention extends React.Component {
                         lineHeight: "100px"
                       }}
                     >
-                      <b style={{ fontSize: "30px" }}>{item.price}</b>元
+                      <b style={{ fontSize: "30px" }}>
+                        {item.price.length > 4
+                          ? item.price / 10000
+                          : item.price}
+                      </b>{" "}
+                      {item.houseType === "租房"
+                        ? "元/月"
+                        : item.price.length > 4
+                        ? "万元"
+                        : "元"}
                     </Col>
                   </Row>
                 </div>

@@ -37,7 +37,12 @@ const initState = {
       // 称呼
       appellation: "",
       //   手机号
-      phone: ""
+      phone: "",
+      // 委托人
+      issuer: {
+        name: '',
+        phone: ''
+      }
     }
   ]
 };

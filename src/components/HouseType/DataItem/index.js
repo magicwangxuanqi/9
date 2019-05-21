@@ -2,6 +2,7 @@ import React from "react";
 import "./index.scss";
 import { Row, Col, Icon, Tag } from "antd";
 import { Link } from "react-router-dom";
+import formatTime from "@/utils/date.js";
 
 class DataItem extends React.Component {
   render() {
@@ -62,7 +63,7 @@ class DataItem extends React.Component {
               </div>
               <div className="heat">
                 <Icon type="dashboard" />
-                &nbsp; 发布时间：{this.props.data.time}
+                &nbsp; 发布时间：{formatTime(this.props.data.time)}
               </div>
               <div>
                 <Tag color="#FF8062">有租房需要预约</Tag>
@@ -72,10 +73,20 @@ class DataItem extends React.Component {
           <Col span={6}>
             <aside className="right">
               <div className="price">
-                <span className="price-num">{this.props.data.price}</span>
-                &nbsp;元
+                <span className="price-num">
+                  {this.props.data.price.length > 4
+                    ? this.props.data.price / 10000
+                    : this.props.data.price}
+                </span>{" "}
+                {this.props.data.houseType === "租房"
+                  ? "元/月"
+                  : this.props.data.price.length > 4
+                  ? "万元"
+                  : "元"}
               </div>
-              <div className="unit-price">{this.props.data.time}</div>
+              <div className="unit-price">
+                {formatTime(this.props.data.time)}
+              </div>
             </aside>
           </Col>
         </Row>

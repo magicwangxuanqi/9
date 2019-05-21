@@ -45,7 +45,6 @@ export default (state = initState, action) => {
   switch (action.type) {
     // 发布房源信息
     case ENTRUST:
-      console.log(action.formData);
       return {
         ...state,
         ...action.formData,

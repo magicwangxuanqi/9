@@ -1,0 +1,63 @@
+.methods {
+    background-color: #fff;
+    color: #333;
+
+    &-box {
+        margin: 0 auto;
+        padding: 50px 0;
+        width: 1150px;
+
+        &-item {
+            text-align: center;
+
+            img {
+                width: 76px;
+                height: 65px;
+                margin-bottom: 17px;
+
+                &:hover {
+                    animation-name: hvr-bob-float, hvr-bob;
+                    animation-duration: .3s, 1.5s;
+                    animation-delay: 0s, .3s;
+                    animation-timing-function: ease-out, ease-in-out;
+                    animation-iteration-count: 1, infinite;
+                    animation-fill-mode: forwards;
+                    animation-direction: normal, alternate;
+                }
+
+                @keyframes hvr-bob-float {
+                    100% {
+                        transform: translateY(-8px);
+                    }
+                }
+
+                @keyframes hvr-bob {
+                    0% {
+                        transform: translateY(-8px);
+
+                    }
+
+                    50% {
+                        transform: translateY(-4px);
+
+                    }
+
+                    100% {
+                        transform: translateY(-8px);
+                    }
+                }
+            }
+
+            b {
+                display: block;
+                font-size: 18px;
+            }
+
+            p {
+                margin: 5px auto;
+                font-size: 12px;
+                color: #B0B3B4;
+            }
+        }
+    }
+}

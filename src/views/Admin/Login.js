@@ -23,7 +23,7 @@ class Login extends React.Component {
       <div className="admin-login">
         <section className="card">
           <Card bordered={false} style={{ width: 420 }}>
-            <Card.Meta title="中介登陆" style={{ textAlign: "center" }} />
+            <Card.Meta title="经纪人登陆" style={{ textAlign: "center" }} />
             <Input
               style={{ marginBottom: "20px", marginTop: "20px" }}
               placeholder="用户名"
@@ -80,7 +80,7 @@ class Login extends React.Component {
               <span>
                 <Icon type="user-add" />
                 &nbsp;
-                <Link to="/admin/register">中介注册</Link>
+                <Link to="/admin/register">经纪人注册</Link>
               </span>
               <span>
                 <Icon type="rollback" />

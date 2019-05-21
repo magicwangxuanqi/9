@@ -4,7 +4,7 @@ import "./ChangePwd.scss";
 import axios from "axios";
 import { api_changePwd } from "@/utils/api";
 
-class Attention extends React.Component {
+class ChangePwd extends React.Component {
   state = {
     oldPassword: "",
     setNewPassword: "",
@@ -16,7 +16,6 @@ class Attention extends React.Component {
     });
   }
   saveModification() {
-    console.log(this.state);
     const { setNewPassword, confirmPassword } = this.state;
     if (setNewPassword === confirmPassword) {
       axios
@@ -25,7 +24,6 @@ class Attention extends React.Component {
           username: window.sessionStorage.getItem("username")
         })
         .then(res => {
-          console.log(res.data);
           if (res.data.code === 0) {
             // 成功
             message.success(res.data.msg + "请重新登陆");
@@ -121,4 +119,4 @@ class Attention extends React.Component {
     );
   }
 }
-export default Attention;
+export default ChangePwd;

@@ -17,6 +17,8 @@ class AdminHeader extends React.Component {
           window.sessionStorage.removeItem('admin_token');
           window.sessionStorage.removeItem('admin_username');
           window.sessionStorage.removeItem('admin_uid');
+          window.sessionStorage.removeItem('admin_name');
+          window.sessionStorage.removeItem('admin_phone');
           this.props.history.push('/admin/login');
         }}>
           <Icon type="poweroff" />&nbsp;

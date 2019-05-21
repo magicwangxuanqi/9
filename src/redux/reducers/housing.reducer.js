@@ -33,18 +33,21 @@ const initState = {
   // 称呼
   appellation: "",
   //   手机号
-  phone: ""
+  phone: "",
+  // 委托人
+  issuer: {
+    name: '',
+    phone: ''
+  }
 };
 
 export default (state = initState, action) => {
   switch (action.type) {
     // 发布房源信息
     case RENTAL:
-      console.log(action.formData);
       return {
         ...state,
         ...action.formData,
-        // images: [],
         region: {
           ...state.region,
           ...action.formData.region,
@@ -57,7 +60,11 @@ export default (state = initState, action) => {
           ...state.floor,
           ...action.formData.floor
         },
-        time: moment().format("YYYY-MM-DD HH:mm:ss")
+        time: moment().format("YYYY-MM-DD HH:mm:ss"),
+        issuer: {
+          ...state.issuer,
+          ...action.formData.issuer
+        }
       };
     default:
       return state;

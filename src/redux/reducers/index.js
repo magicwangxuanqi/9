@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import UserReducer from "./user.reducer";// 用户reducer
+import getUserInfoReducer from "./getUserInfo.reducer";// 获取用户信息
 import HousingReducer from "./housing.reducer";// 房源信息reducer
 import GetHousingInfoReducer from "./getHousingInfo.reducer";// 获取房源信息reducer
 import SerialReducer from "./serial.reducer";// 根据房源id获取房源信息reducer
@@ -14,6 +15,7 @@ import countReducer from "./count.reducer";// 获取关注人数的reducer
 
 export default combineReducers({
   UserReducer,
+  getUserInfoReducer,
   HousingReducer,
   GetHousingInfoReducer,
   SerialReducer,

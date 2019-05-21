@@ -15,11 +15,9 @@ axios.interceptors.request.use(request => {
 axios.interceptors.response.use(
   response => {
     if (response.data.token) {
-      console.log(`token: ${response.data.token}`);
       window.sessionStorage.setItem("token", response.data.token);
     }
     if (response.data.admin_token) {
-      console.log(`admin_token: ${response.data.admin_token}`);
       window.sessionStorage.setItem("admin_token", response.data.admin_token);
     }
     return response;

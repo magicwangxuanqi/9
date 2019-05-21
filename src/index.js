@@ -18,6 +18,7 @@ import App from "./router/App";
 // 导入axios
 import "./utils/axios.config";
 // store
+// let store = createStore(reducer, applyMiddleware(thunk));
 let store = createStore(reducer, applyMiddleware(createLogger(), thunk));
 
 ReactDOM.render(

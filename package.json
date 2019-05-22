@@ -67,6 +67,8 @@
     "workbox-webpack-plugin": "3.6.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
@@ -128,8 +130,10 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.4.0",
     "babel-plugin-import": "^1.11.0",
+    "gh-pages": "^2.0.1",
     "less": "^3.9.0",
     "less-loader": "^4.1.0"
   },
-  "proxy": "http://localhost:9093"
+  "proxy": "http://localhost:9093",
+  "homepage": "https://magicwangxuanqi.github.io"
 }

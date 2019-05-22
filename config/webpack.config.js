@@ -120,10 +120,11 @@ module.exports = function (webpackEnv) {
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
-    devtool: isEnvProduction ?
-      shouldUseSourceMap ?
-      'source-map' :
-      false : isEnvDevelopment && 'cheap-module-source-map',
+    // devtool: isEnvProduction ?
+    //   shouldUseSourceMap ?
+    //   'source-map' :
+    //   false : isEnvDevelopment && 'cheap-module-source-map',
+    devtool: false,
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
@@ -218,14 +219,15 @@ module.exports = function (webpackEnv) {
         new OptimizeCSSAssetsPlugin({
           cssProcessorOptions: {
             parser: safePostCssParser,
-            map: shouldUseSourceMap ? {
-              // `inline: false` forces the sourcemap to be output into a
-              // separate file
-              inline: false,
-              // `annotation: true` appends the sourceMappingURL to the end of
-              // the css file, helping the browser find the sourcemap
-              annotation: true,
-            } : false,
+            // map: shouldUseSourceMap ? {
+            //   // `inline: false` forces the sourcemap to be output into a
+            //   // separate file
+            //   inline: false,
+            //   // `annotation: true` appends the sourceMappingURL to the end of
+            //   // the css file, helping the browser find the sourcemap
+            //   annotation: true,
+            // } : false,
+            map: false,
           },
         }),
       ],

@@ -1,4 +1,4 @@
-const BASEURL = 'http://localhost:9093/';
+const BASEURL = 'http://api.housing.conjuring.cn/';
 
 // 用户注册
 export const api_register = BASEURL + 'user/register';

@@ -132,6 +132,5 @@
     "less": "^3.9.0",
     "less-loader": "^4.1.0"
   },
-  "proxy": "http://localhost:9093",
   "homepage": "./"
 }

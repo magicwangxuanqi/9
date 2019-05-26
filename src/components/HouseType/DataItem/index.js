@@ -74,7 +74,9 @@ class DataItem extends React.Component {
             <aside className="right">
               <div className="price">
                 <span className="price-num">
-                  {this.props.data.price.length > 4
+                  {this.props.data.houseType === "租房"
+                    ? this.props.data.price
+                    : this.props.data.price.length > 4
                     ? this.props.data.price / 10000
                     : this.props.data.price}
                 </span>{" "}

@@ -120,7 +120,11 @@ class RentDetail extends React.Component {
                   <Row span={24}>
                     <h1>
                       {this.props.SerialReducer.result.price}&nbsp;
-                      <span className="unit">元</span>
+                      <span className="unit">
+                        {this.props.SerialReducer.result.houseType === "租房"
+                          ? "元/月"
+                          : "元"}
+                      </span>
                     </h1>
                   </Row>
                   <Row style={{ margin: "20px 0" }}>

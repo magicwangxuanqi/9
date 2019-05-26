@@ -88,7 +88,9 @@ class Attention extends React.Component {
                       }}
                     >
                       <b style={{ fontSize: "30px" }}>
-                        {item.price.length > 4
+                        {item.houseType === "租房"
+                          ? item.price
+                          : item.price.length > 4
                           ? item.price / 10000
                           : item.price}
                       </b>{" "}
